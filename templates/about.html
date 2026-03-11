@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block body %} 
+
+<h1>MOMA With Modern Art for Future!</h1>
+
+<div class="about-container">
+    <div class="about-image">
+        <img src="{{ url_for('static', filename='css/image/MOMA2.jpg')}}" alt="building">
+    </div>
+
+    <div class="about-text">
+        <h3>Explore Art with Modern Vibes!</h3>
+        <p><u>United States, New York</u></p>
+        <p>
+            Founded in 1929, the Museum of Modern Art (MoMA) in downtown Manhattan was the first museum dedicated to the modern era. 
+            Today, MoMA's rich and diverse collection offers a comprehensive overview of modern and contemporary art, ranging from 
+            innovative European paintings and sculptures of the 1880s to contemporary film, design, and performance art. From its 
+            initial donation of eight prints and one drawing, the collection has grown to include more than 150,000 paintings, sculptures, 
+            drawings, prints, photographs, architectural models and drawings, and design objects; approximately 22,000 films and four million 
+            film stills; and, in its Library and Archives, more than 300,000 books, artist books, and magazines, as well as extensive individual 
+            archives on more than 70,000 artists. Highlights of the collection include Claude Monet's Water Lilies, Vincent van Gogh's Starry Night, 
+            and Pablo Picasso's Les Demoiselles d'Avignon, along with recent works by Andy Warhol, Elizabeth Murray, Cindy Sherman, and many others.
+        </p>
+    </div>
+</div>
+
+{% endblock %}
