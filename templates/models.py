@@ -13,5 +13,11 @@ class Art(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String)
 
+class Artist(Base):
+    __tablename__ = "artist"
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String)
+
 Base.metadata.create_all(engine)
 
