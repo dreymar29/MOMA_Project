@@ -26,7 +26,7 @@ class Visitor(Base):
     name = Column(String)
 
 class Exhibition(Base):
-    __tablename__ = "exhibition"
+    __tablename__ = "exhibition" 
 
     id = Column(Integer, primary_key=True)
     name = Column(String)
