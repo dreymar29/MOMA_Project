@@ -18,10 +18,10 @@ class Artist(Base):
 
     id = Column(Integer, primary_key=True)
     name = Column(String)
-
-class VisitorInteraction(Base):
+    
+class Visitor(Base):
     __tablename__ = "visitor"
-
+    
     id = Column(Integer, primary_key=True)
     name = Column(String)
 
