@@ -25,5 +25,11 @@ class Visitor(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String)
 
-Base.metadata.create_all(engine)
+class Exhibition(Base):
+    __tablename__ = "exhibition"
 
+    id = Column(Integer, primary_key=True)
+    name = Column(String)
+
+
+Base.metadata.create_all(engine)
