@@ -9,9 +9,26 @@
     <h1><u>MoMA: The Museum of Modern Art</u></h1>
 
     <div class="home-image">
-        <img src="{{ url_for ('static', filename='css/image/MOMAIMG.jpg')}}" alt="MOMA" width="900px">
+        <img src="{{ url_for ('static', filename='image/MOMAIMG.jpg')}}" alt="MOMA" width="900px">
     </div>
 
+    <div class="container">
+    <h2>TOP ART</h2>
+
+    <div class="gallery-grid">
+        {% for art in arts %}
+
+    <div class="art-card">
+        <div class="art-image">
+            <img src="{{ url_for ('static', filename='image/' + art.id|string + '.jpg') }}" alt="{{ art.name }}">
+        </div>
+        <div class="art-info">
+            <h3>{{ art.name }}</h3>
+            <p>{{ art.artist_data.name }}</p> 
+        </div>
+    </div>
+    {% endfor %}
+</div>
 </div>
 {% endblock %}
 

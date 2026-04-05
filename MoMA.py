@@ -1,10 +1,20 @@
-from flask import Flask, render_template, url_for
+from flask import Flask, render_template, redirect, url_for
+from models import db, Art
+import os
 
 app = Flask(__name__)
 
+basedir = os.path.abspath(os.path.dirname(__file__))
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'moma.db')
+app.config['SQLALCHEMY_DATABASE_CONNECTION'] = 'sqlite:///moma.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+db.init_app(app)
+
 @app.route('/')
 def index():
-    return render_template('index.html')
+    all_arts = Art.query.all()
+    return render_template('index.html', arts=all_arts)
 
 @app.route('/about')
 def about():
@@ -17,10 +27,6 @@ def art():
 @app.route('/artist')
 def artist():
     return render_template('artist.html')
-
-@app.route('/contact')
-def contact():
-    return render_template('contact.html')
 
 if __name__ == "__main__":
     app.run(debug=True)

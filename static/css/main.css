@@ -55,3 +55,38 @@ h1{
 .about-text p{
     margin-bottom: 15px;
 }
+
+/* Container Utama */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 30px; /* Jarak antar foto */
+    padding: 20px 0;
+}
+
+.art-card {
+    background: #fff;
+    transition: transform 0.3s ease;
+}
+
+.art-card:hover {
+    transform: translateY(-5px); 
+}
+
+.art-image img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.art-info h3 {
+    font-size: 1.1rem;
+    margin: 10px 0 5px 0;
+    font-weight: bold;
+}
+
+.art-info p {
+    color: #666;
+    font-style: italic;
+}
