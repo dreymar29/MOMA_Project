@@ -3,7 +3,7 @@ from models import db, Artist, Art, Visitor, InteractionLog
 
 def isi_database():
     with app.app_context():
-        data_karya = [
+        data_art = [
             {"artist": "Joan Snyder", "art": "My August"},
             {"artist": "Ian Cheng", "art": "3FACE"},
             {"artist": "Louis Fratino", "art": "Fanciullo"},
@@ -11,7 +11,7 @@ def isi_database():
             {"artist": "Vaginal Davis", "art": "Xochiquetzal, The Precious Feather Flower Goddess of Beauty and Art"}
         ]
 
-        for item in data_karya:
+        for item in data_art:
             artist = Artist.query.filter_by(name=item["artist"]).first()
             if not artist:
                 artist = Artist(name=item["artist"])
@@ -19,8 +19,8 @@ def isi_database():
                 db.session.commit()
             
             if not Art.query.filter_by(name=item["art"]).first():
-                karya = Art(name=item["art"], artist_id=artist.id)
-                db.session.add(karya)
+                arts = Art(name=item["art"], artist_id=artist.id)
+                db.session.add(arts)
 
         visitors = [
             {"name": "Dida", "gender": "Female", "job": "Student"},
@@ -39,26 +39,26 @@ def isi_database():
         print("Semua data berhasil diinput!")
 
         db.session.commit() 
-        interaksi = [
-            {"visitor": "Dida", "art": "My August", "ar": "Scanned", "audio": "Played"},
-            {"visitor": "Audrey", "art": "3FACE", "ar": "Scanned", "audio": "Played"},
-            {"visitor": "Egi", "art": "Fanciullo", "ar": "Scanned", "audio": "Played"},
-            {"visitor": "Jihan", "art": "Head of Koitalel", "ar": "Scanned", "audio": "Played"},
-            {"visitor": "Tubagus", "art": "Xochiquetzal, The Precious Feather Flower Goddess of Beauty and Art", "ar": "Scanned", "audio": "Played"},
+        interaction = [
+            {"visitor": "Dida", "art": "My August", "or": "Scanned", "audio": "Played"},
+            {"visitor": "Audrey", "art": "3FACE", "or": "Scanned", "audio": "Played"},
+            {"visitor": "Egi", "art": "Fanciullo", "or": "Scanned", "audio": "Played"},
+            {"visitor": "Jihan", "art": "Head of Koitalel", "or": "Scanned", "audio": "Played"},
+            {"visitor": "Tubagus", "art": "Xochiquetzal, The Precious Feather Flower Goddess of Beauty and Art", "or": "Scanned", "audio": "Played"},
         ]
 
-        for log in interaksi:
+        for log in interaction:
             v = Visitor.query.filter_by(name=log["visitor"]).first()
             a = Art.query.filter_by(name=log["art"]).first()
 
             if v and a:
-                cek_log = InteractionLog.query.filter_by(visitor_id=v.id, art_id=a.id).first()
+                check_log = InteractionLog.query.filter_by(visitor_id=v.id, art_id=a.id).first()
                 
-                if not cek_log:
+                if not check_log:
                     new_log = InteractionLog(
                         visitor_id=v.id, 
                         art_id=a.id, 
-                        ar_status=log["ar"], 
+                        or_status=log["or"], 
                         audio_status=log["audio"]
                     )
                     db.session.add(new_log)

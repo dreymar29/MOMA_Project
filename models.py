@@ -24,6 +24,6 @@ class InteractionLog(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     visitor_id = db.Column(db.Integer, db.ForeignKey('visitor.id'))
     art_id = db.Column(db.Integer, db.ForeignKey('art.id'))
-    ar_status = db.Column(db.String(50))
+    or_status = db.Column(db.String(50))
     audio_status = db.Column(db.String(50))
     timestamp = db.Column(db.DateTime)
