@@ -19,6 +19,12 @@ class Visitor(db.Model):
     name = db.Column(db.String(100))
     gender = db.Column(db.String(20))
     job = db.Column(db.String(100))
+    password = db.Column(db.String(100))
+    
+class Staff(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(100), unique=True, nullable=False)
+    password = db.Column(db.String(100), nullable=False)
 
 class InteractionLog(db.Model):
     id = db.Column(db.Integer, primary_key=True)
