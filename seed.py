@@ -23,20 +23,32 @@ def isi_database():
                 db.session.add(arts)
 
         visitors = [
-            {"name": "Dida", "gender": "Female", "job": "Student"},
-            {"name": "Audrey", "gender": "Female", "job": "Student"},
-            {"name": "Egi", "gender": "Female", "job": "Student"},
-            {"name": "Jihan", "gender": "Female", "job": "Student"},
-            {"name": "Tubagus", "gender": "Male", "job": "Student"}
+            {"name": "Dida", "gender": "Female", "job": "Student", "pw": "didadidada"},
+            {"name": "Audrey", "gender": "Female", "job": "Student", "pw": "odeyodeydey"},
+            {"name": "Egi", "gender": "Female", "job": "Student", "pw": "egiegigi"},
+            {"name": "Jihan", "gender": "Female", "job": "Student", "pw": "jihanjiji"},
+            {"name": "Tubagus", "gender": "Male", "job": "Student", "pw": "tuthegus"}
         ]
 
         for v in visitors:
             if not Visitor.query.filter_by(name=v["name"]).first():
-                new_v = Visitor(name=v["name"], gender=v["gender"], job=v["job"])
+                new_v = Visitor(name=v["name"], gender=v["gender"], job=v["job"], password=v["pw"])
                 db.session.add(new_v)
 
         db.session.commit()
         print("Semua data berhasil diinput!")
+        
+        staff_data = [
+            {"username": "admin", "password": "123"},
+            {"username": "staff_moma", "password": "123"}
+        ]
+
+        for s in staff_data:
+            new_s = Staff(username=s["username"], password=s["password"])
+            db.session.add(new_s)
+
+        db.session.commit()
+        print("Database berhasil di-reset dan diisi ulang!")
 
         db.session.commit() 
         interaction = [
