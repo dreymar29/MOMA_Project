@@ -22,7 +22,8 @@ def about():
 
 @app.route('/art')
 def art():
-    return render_template('art.html')
+    all_art = Art.query.all()
+    return render_template('art.html', all_art=all_art)
 
 @app.route('/artist')
 def artist():

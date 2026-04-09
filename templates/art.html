@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<div class="home-container">
+    <h1>EXPLORE THE ART</h1>
+    
+    <div class="gallery-grid"> 
+        {% for art in all_art %}
+        <div class="art-card">
+            <div class="art-image">
+                <img src="{{ url_for('static', filename='image/' + art.id|string + '.jpg') }}" 
+                     class="art-img"
+                     onclick="openModal(this.src, '{{ art.name }}')">
+            </div>
+            <div class="art-info">
+                <h3>{{ art.name }}</h3>
+                <p>{{ art.artist_data.name }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

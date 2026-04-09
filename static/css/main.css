@@ -56,7 +56,6 @@ h1{
     margin-bottom: 15px;
 }
 
-/* Container Utama */
 .gallery-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -78,6 +77,8 @@ h1{
     height: 300px;
     object-fit: cover;
     border-radius: 4px;
+    overflow: hidden;
+    cursor: pointer;
 }
 
 .art-info h3 {
@@ -89,4 +90,76 @@ h1{
 .art-info p {
     color: #666;
     font-style: italic;
+}
+
+.card-img {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.card-img:hover {
+    transform: scale(1.05);
+}
+
+.modal {
+    display: none; /* INI KUNCINYA biar gak muncul pas web baru dibuka */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.9);
+    overflow: auto;
+}
+
+.btn-control, .btn-back {
+    font-family: 'Georgia', serif;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* Update di main.css */
+
+.modal-content {
+    display: block;
+    margin: auto;
+    max-width: 80%; 
+    transition: transform 0.2s;
+    /* Tambahkan margin bawah agar foto tidak menabrak tombol */
+    margin-bottom: 120px; 
+}
+
+.modal-controls {
+    text-align: center;
+    padding: 15px 25px;
+    background: rgba(255, 255, 255, 0.95); /* Putih pekat biar tombol jelas */
+    position: fixed; /* Tetap pakai fixed tapi kita perkuat z-index */
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 50px;
+    
+    /* KUNCI UTAMA: z-index harus lebih besar dari z-index modal */
+    z-index: 2000; 
+    
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+/* Pastikan modal-nya sendiri z-indexnya di bawah controls */
+.modal {
+    z-index: 1000; 
+}
+
+#myModal {
+    overflow: auto; /* Memungkinkan scroll kalau foto kegedean */
+    display: none; 
+    align-items: center;
+    justify-content: center;
 }
