@@ -16,8 +16,29 @@
                 <h3>{{ art.name }}</h3>
                 <p>{{ art.artist_data.name }}</p>
             </div>
-        </div>
-        {% endfor %}
-    </div>
+
+            <div class="review-box">
+                <small>Ulasan Terbaru:</small>
+                {% for log in art.interaction_logs %}
+                    {% if log.review_text %}
+                        <p style="font-size: 0.8em; color: gray;">
+                            "{{ log.review_text }}" - <strong>{{ log.rating }}★</strong>
+                        </p>
+                    {% endif %}
+                {% endfor %}
+
+                <form action="{{ url_for('add_review', art_id=art.id) }}" method="POST" style="margin-top: 10px;">
+                    <input type="text" name="review_text" placeholder="Tulis ulasan..." required 
+                           style="font-size: 0.8em; width: 60%;">
+                    <select name="rating" style="font-size: 0.8em;">
+                        <option value="5">5★</option>
+                        <option value="4">4★</option>
+                        <option value="3">3★</option>
+                        <option value="2">2★</option>
+                        <option value="1">1★</option>
+                    </select>
+                    <button type="submit" style="font-size: 0.7em;">Kirim</button>
+                </form>
+            </div> </div> {% endfor %} </div>    
 </div>
 {% endblock %}

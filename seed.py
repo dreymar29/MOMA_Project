@@ -1,5 +1,5 @@
 from MoMA import app
-from models import db, Artist, Art, Visitor, InteractionLog
+from models import db, Artist, Art, Visitor, InteractionLog, Staff
 
 def isi_database():
     with app.app_context():
@@ -44,11 +44,12 @@ def isi_database():
         ]
 
         for s in staff_data:
-            new_s = Staff(username=s["username"], password=s["password"])
-            db.session.add(new_s)
+            if not Staff.query.filter_by(username=s["username"]).first():
+                new_s = Staff(username=s["username"], password=s["password"])
+                db.session.add(new_s)
 
         db.session.commit()
-        print("Database berhasil di-reset dan diisi ulang!")
+        print("Database berhasil diisi ulang!")
 
         db.session.commit() 
         interaction = [

@@ -163,3 +163,34 @@ h1{
     align-items: center;
     justify-content: center;
 }
+
+/* Star Rating CSS */
+.star-rating {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+}
+.star-rating input { display: none; }
+.star-rating label {
+    font-size: 30px;
+    color: #ccc;
+    cursor: pointer;
+}
+.star-rating input:checked ~ label,
+.star-rating label:hover,
+.star-rating label:hover ~ label {
+    color: #f5b301; /* Warna kuning emas */
+}
+
+.review-box {
+    margin-top: 10px;
+    padding: 8px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    border-left: 3px solid #333; /* Kasih garis biar estetik */
+}
+
+.review-box p {
+    margin: 5px 0;
+    font-style: italic;
+}

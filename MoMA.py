@@ -1,5 +1,5 @@
-from flask import Flask, render_template, redirect, url_for
-from models import db, Art, Visitor, Staff
+from flask import Flask, render_template, redirect, url_for, request, session, flash
+from models import db, Art, Visitor, Staff, InteractionLog
 import os
 
 app = Flask(__name__)
@@ -65,6 +65,34 @@ def register():
         return redirect(url_for('login'))
         
     return render_template('register.html')
+
+@app.route('/add_review/<int:art_id>', methods=['POST'])
+def add_review(art_id):
+    if 'user_id' not in session:
+        visitor_id = 1 
+    else:
+        visitor_id = session['user_id']
+
+    text = request.form.get('review_text')
+    stars = request.form.get('rating')
+
+    new_log = InteractionLog(
+        visitor_id=visitor_id,
+        art_id=art_id,
+        review_text=text,
+        rating=int(stars),
+        or_status="Reviewed"
+    )
+    
+    db.session.add(new_log)
+    db.session.commit()
+
+    return redirect(url_for('art')) 
+
+@app.route('/review')
+def all_reviews():
+    daftar_ulasan = InteractionLog.query.filter(InteractionLog.review_text != None).all()
+    return render_template('review.html', reviews=daftar_ulasan)
 
 if __name__ == "__main__":
     app.run(debug=True)

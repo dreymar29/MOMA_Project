@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<div class="home-container">
+    <h1>A Review from You</h1>
+    <hr>
+
+    <div class="review-list">
+        {% for log in reviews %}
+        <div class="review-card" style="border: 1px solid #ddd; margin-bottom: 15px; padding: 15px; border-radius: 8px;">
+            <h3>Karya:{{ log.art.name }}</h3> 
+            
+            <p><strong>{{ log.visitor.name }}</strong> Rating: 
+               <span style="color: #f5b301;">{{ log.rating }}★</span>
+            </p>
+            
+            <blockquote style="font-style: italic; color: #555;">
+                "{{ log.review_text }}"
+            </blockquote>
+            
+            <small style="color: #999;">Status: {{ log.or_status }}</small>
+        </div>
+
+        {% else %}
+        <p>Belum ada ulasan yang masuk.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
