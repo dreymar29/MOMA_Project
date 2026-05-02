@@ -3,6 +3,16 @@
 {% block body %}
 <div class="home-container">
     <h1>EXPLORE THE ART</h1>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert-box" style="padding: 15px; margin-bottom: 20px; border-radius: 5px; background-color: #fff3f3; border: 1px solid #ffcccc; color: #d93025; font-size: 0.9em; text-align: center;">
+            <strong>Info:</strong> {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
     
     <div class="gallery-grid"> 
         {% for art in all_art %}
@@ -31,6 +41,7 @@
                     <input type="text" name="review_text" placeholder="Tulis ulasan..." required 
                            style="font-size: 0.8em; width: 60%;">
                     <select name="rating" style="font-size: 0.8em;">
+                        <option value="rate">Rate</option>
                         <option value="5">5★</option>
                         <option value="4">4★</option>
                         <option value="3">3★</option>

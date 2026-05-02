@@ -68,26 +68,46 @@ def register():
 
 @app.route('/add_review/<int:art_id>', methods=['POST'])
 def add_review(art_id):
-    if 'user_id' not in session:
-        visitor_id = 1 
-    else:
-        visitor_id = session['user_id']
+    try:
+        # Ambil data dari form
+        text = request.form.get('review_text', '').strip()
+        stars = request.form.get('rating')
 
-    text = request.form.get('review_text')
-    stars = request.form.get('rating')
+        # VALIDASI 1: Minimal 10 Kata
+        # .split() memecah kalimat jadi daftar kata berdasarkan spasi
+        jumlah_kata = len(text.split())
+        if jumlah_kata < 10:
+            # Jika kurang dari 10, kita "lempar" ke bagian except
+            raise ValueError(f"Ulasan minimal 10 kata (punya kamu baru {jumlah_kata} kata).")
 
-    new_log = InteractionLog(
-        visitor_id=visitor_id,
-        art_id=art_id,
-        review_text=text,
-        rating=int(stars),
-        or_status="Reviewed"
-    )
-    
-    db.session.add(new_log)
-    db.session.commit()
+        # VALIDASI 2: Rating harus dipilih
+        if not stars:
+            raise ValueError("Kamu harus memilih rating bintang!")
 
-    return redirect(url_for('art')) 
+        # Jika lolos semua validasi, baru simpan ke DB
+        new_log = InteractionLog(
+            visitor_id=session.get('user_id', 1), # Anggap ID 1 kalau belum login
+            art_id=art_id,
+            review_text=text,
+            rating=int(stars),
+            or_status="Reviewed"
+        )
+        
+        db.session.add(new_log)
+        db.session.commit()
+        flash("Ulasan berhasil dikirim!", "success")
+
+    except ValueError as e:
+        # Bagian ini menangkap pesan error dari 'raise ValueError' di atas
+        db.session.rollback()
+        flash(str(e), "danger") # Mengirim pesan error ke web
+        
+    except Exception as e:
+        # Menangkap error tak terduga (misal database error)
+        db.session.rollback()
+        flash("Terjadi kesalahan sistem.", "danger")
+
+    return redirect(url_for('art'))
 
 @app.route('/review')
 def all_reviews():
