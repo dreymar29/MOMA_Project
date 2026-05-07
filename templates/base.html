@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,17 +8,23 @@
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
     {% block head %} {% endblock %}
 </head>
+
 <body>
     <nav class="navbar">
-    <ul>
-        <li><a href="{{ url_for('about')}}">About</a></li>
-        <li><a href="{{ url_for('art')}}">Art</a></li>
-        <li><a href="{{ url_for('artist')}}">Artist</a></li>
-        <li><a href="{{ url_for('all_reviews')}}">Review</a></li>
-        <li style="float: right;"><a href="{{ url_for('login') }}">Login</a></li>
-    </ul>
+        <div class="navbar-container">
+            <ul class="nav-menu">
+                <li><a href="{{ url_for('about') }}">About</a></li>
+                <li><a href="{{ url_for('art') }}">Art</a></li>
+                <li><a href="{{ url_for('artist') }}">Artist</a></li>
+                <li><a href="{{ url_for('all_reviews') }}">Review</a></li>
+            </ul>
+            <div class="nav-auth">
+                <a href="{{ url_for('login') }}" class="login-btn">Login</a>
+            </div>
+        </div>
     </nav>
 
-{% block body %} {% endblock %}
+    {% block body %} {% endblock %}
 </body>
+
 </html>

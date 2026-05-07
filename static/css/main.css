@@ -4,27 +4,61 @@ body{
     text-align: justify;
 }
 
-h1{
-    text-align: center;
+
+.navbar {
+    background-color: #fcfbf4; /* Warna krem halus agar tidak kontras tajam */
+    border-bottom: 1px solid #ddd;
+    padding: 12px 0;
+    position: sticky; /* Agar menu tetap ada saat di-scroll */
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05); /* Efek bayangan tipis agar tidak ngawang */
 }
 
-.navbar ul{
-    list-style-type: none;
-    padding: 10px;
-    margin: auto;
-    overflow: hidden;
-    background-color: #ECE7D1;
-}
-
-.navbar a{
-    text-decoration: none;
+.navbar-container {
+    max-width: 1100px;
+    margin: 0 auto;
     display: flex;
-    text-align: center;
-    padding: 10px;
+    justify-content: space-between; /* Menu di kiri, Login di kanan */
+    align-items: center;
+    padding: 0 20px;
 }
 
-.navbar li{
-    float: left;
+.nav-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 30px;
+}
+
+.nav-menu a {
+    text-decoration: none;
+    font-family: 'Georgia', serif;
+    font-size: 0.9rem;
+    color: #333;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: 0.3s;
+}
+
+.nav-menu a:hover {
+    color: #888;
+}
+
+.nav-auth .login-btn {
+    text-decoration: none;
+    font-weight: bold;
+    color: #333;
+    border: 1px solid #333;
+    padding: 8px 20px;
+    border-radius: 25px; /* Bentuk kapsul modern */
+    transition: all 0.3s;
+}
+
+.nav-auth .login-btn:hover {
+    background-color: #333;
+    color: #fff;
 }
 
 .home-container{
@@ -39,17 +73,118 @@ h1{
     border-radius: 8px;
 }
 
-.about-container{
-    display: flex;
-    align-items: flex-start;
-    gap: 30px;
-    margin: 20px;
+.about-main-wrapper {
+    max-width: 1000px; /* Dipersempit agar lebih fokus di tengah */
+    margin: 0 auto;
+    padding: 40px 20px; /* Padding dikurangi agar tidak terlalu turun */
 }
 
-.about-image img{
-    max-width: 400px;
+.about-hero-title {
+    text-align: center;
+    padding: 60px 0; /* Memberikan ruang lega atas-bawah */
+    background-color: #fcfbf4; /* Warna krem tipis agar judul punya area sendiri */
+    margin-bottom: 50px;
+    border-bottom: 1px solid #eee; /* Garis tipis pemisah visual */
+}
+
+.about-hero-title h1 {
+    font-size: 2.5rem; /* Ukuran proporsional */
+    margin: 0;
+    letter-spacing: 12px; /* Jarak huruf lebar khas galeri seni */
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #000;
+}
+
+.tagline-new {
+    font-size: 0.9rem;
+    color: #666;
+    margin-top: 10px;
+    letter-spacing: 2px;
+    text-align: center;
+}
+
+.tagline-new {
+    font-size: 0.95rem; 
+    color: #666;
+    margin-top: 8px;
+    text-align: center;
+}
+
+.about-split-container {
+    display: flex;
+    gap: 40px;
+    align-items: flex-start; /* Teks sejajar dengan bagian atas gambar */
+}
+
+.about-visual img {
+    width: 100%;
+    max-width: 450px; /* Batasi lebar gambar agar tidak menutupi layar */
     height: auto;
-    border-radius: 8px;
+    border-radius: 4px;
+    box-shadow: 0 4px 25px rgba(0,0,0,0.07); /* Shadow lebih halus */
+}
+
+.about-content-text h3 {
+    font-size: 1.7rem; /* Judul konten diperkecil */
+    margin-top: 0;
+}
+
+.location-clean {
+    font-size: 0.9rem;
+    color: #888;
+    margin-bottom: 20px;
+}
+
+.tagline-new {
+    font-style: italic;
+    color: #777;
+    margin-top: 15px;
+    font-size: 1.1rem;
+}
+
+.about-split-container {
+    display: flex;
+    gap: 60px;
+    align-items: center;
+}
+
+.about-visual { flex: 1; }
+
+.about-visual img {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+    /* Efek shadow halus, bukan kotak kaku */
+    box-shadow: 0 10px 40px rgba(0,0,0,0.08); 
+    border: 1px solid #f0f0f0;
+}
+
+.about-content-text { flex: 1.2; }
+
+.about-content-text h3 {
+    font-size: 2.2rem;
+    margin-bottom: 10px;
+}
+
+.location-clean {
+    font-weight: bold;
+    color: #555;
+    margin-bottom: 30px;
+    display: inline-block;
+    border-bottom: 2px solid #333;
+    padding-bottom: 5px;
+}
+
+.text-body p {
+    line-height: 1.9;
+    margin-bottom: 20px;
+    color: #444;
+    text-align: left; /* Lebih modern dibanding justify untuk web art */
+}
+
+@media (max-width: 768px) {
+    .about-split-container { flex-direction: column; text-align: center; }
 }
 
 .about-text p{
