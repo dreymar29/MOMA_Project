@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for ('static', filename='css/main.css') }}">
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
     {% block head %} {% endblock %}
 </head>
 <body>
@@ -12,54 +13,11 @@
         <li><a href="{{ url_for('about')}}">About</a></li>
         <li><a href="{{ url_for('art')}}">Art</a></li>
         <li><a href="{{ url_for('artist')}}">Artist</a></li>
+        <li><a href="{{ url_for('all_reviews')}}">Review</a></li>
         <li style="float: right;"><a href="{{ url_for('login') }}">Login</a></li>
     </ul>
     </nav>
 
 {% block body %} {% endblock %}
-
-<div id="myModal" class="modal" style="display: none;">
-        <span class="close" onclick="closeModal()">&times;</span>
-        <img class="modal-content" id="img01">
-        <div id="caption"></div>
-        <div class="zoom-controls">
-            <button onclick="zoomIn()">➕ Zoom In</button>
-            <button onclick="zoomOut()">➖ Zoom Out</button>
-            <button class="btn-back" onclick="closeModal()">🔙 Kembali ke Galeri</button>
-        </div>
-    </div>
-
-    <script>
-        var modal = document.getElementById("myModal");
-        var modalImg = document.getElementById("img01");
-        var scale = 1;
-
-        function openModal(src, name) {
-            modal.style.display = "block";
-            modalImg.src = src;
-            document.getElementById("caption").innerHTML = name;
-            scale = 1;
-            modalImg.style.transform = "scale(" + scale + ")";
-        }
-
-        function closeModal() {
-            var modal = document.getElementById("myModal");
-            modal.style.display = "none";
-            scale = 1;
-            document.getElementById("img01").style.transform = "scale(1)";
-}
-
-        function zoomIn() {
-            scale += 0.2;
-            modalImg.style.transform = "scale(" + scale + ")";
-        }
-
-        function zoomOut() {
-            if (scale > 0.4) {
-                scale -= 0.2;
-                modalImg.style.transform = "scale(" + scale + ")";
-            }
-        }
-    </script>
 </body>
 </html>

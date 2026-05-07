@@ -1,29 +1,78 @@
 {% extends 'base.html' %}
-
 {% block body %}
-<div class="home-container">
-    <h1>A Review from You</h1>
-    <hr>
+<!-- Wrapper Utama dengan Flexbox -->
+<div class="main-container" style="display: flex; flex-direction: row; align-items: flex-start; gap: 20px; padding: 20px; max-width: 1200px; margin: 0 auto;">
+    
+    <div class="art-section" style="flex: 2; min-width: 0;">
+        <h2 style="margin-top: 0;">Art Reviews</h2>
+        
+        {% for art in all_art %}
+        
+        <div class="art-card" style="border: 1px solid #ddd; padding: 15px; margin-bottom: 20px; border-radius: 8px; background: #fff;">
+            <h3 style="margin: 0 0 5px 0;">{{ art.name }}</h3>
+            <p style="color: #666; margin-bottom: 10px;">Artist: {{ art.artist_data.name }}</p>
+            
+            <button type="button" onclick="openArtModal('{{ art.id }}')" style="background: #333; color: #fff; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; font-weight: bold;">
+                Lihat Semua Review
+            </button>
 
-    <div class="review-list">
-        {% for log in reviews %}
-        <div class="review-card" style="border: 1px solid #ddd; margin-bottom: 15px; padding: 15px; border-radius: 8px;">
-            <h3>Karya:{{ log.art.name }}</h3> 
-            
-            <p><strong>{{ log.visitor.name }}</strong> Rating: 
-               <span style="color: #f5b301;">{{ log.rating }}★</span>
-            </p>
-            
-            <blockquote style="font-style: italic; color: #555;">
-                "{{ log.review_text }}"
-            </blockquote>
-            
-            <small style="color: #999;">Status: {{ log.or_status }}</small>
+            <div id="modal-{{ art.id }}" class="modal-overlay" style="display:none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7);">
+                <div class="modal-content" style="background: white; margin: 5% auto; padding: 25px; width: 50%; border-radius: 12px; max-height: 85vh; overflow-y: auto; position: relative; box-shadow: 0 4px 20px rgba(0,0,0,0.2);">
+                    <span onclick="closeArtModal('{{ art.id }}')" style="position: absolute; right: 20px; top: 15px; cursor:pointer; font-size: 28px; color: #aaa;">&times;</span>
+                    
+                    <h2 style="margin-top: 0;">Ulasan untuk: {{ art.name }}</h2>
+                    <hr style="border: 0; border-top: 1px solid #eee; margin: 15px 0;">
+                    
+                    <!-- Form Input Review -->
+                    <form action="{{ url_for('add_review', art_id=art.id) }}" method="POST">
+                        <textarea name="review_text" placeholder="Tulis ulasan karya (min 10 kata)..." required style="width: 100%; height: 100px; padding: 10px; border: 1px solid #ddd; border-radius: 5px; resize: vertical;"></textarea>
+                        <div style="margin-top: 10px; display: flex; gap: 10px; align-items: center;">
+                            <select name="rating" style="padding: 8px; border-radius: 5px; border: 1px solid #ddd;">
+                                <option value="5">5 Stars</option>
+                                <option value="4">4 Stars</option>
+                                <option value="3">3 Stars</option>
+                                <option value="2">2 Stars</option>
+                                <option value="1">1 Star</option>
+                            </select>
+                            <button type="submit" style="background: #007bff; color: white; border: none; padding: 8px 20px; border-radius: 5px; cursor: pointer; font-weight: bold;">Kirim Review</button>
+                        </div>
+                    </form>
+
+                    <h4 style="margin: 25px 0 10px 0;">Komentar Pengunjung:</h4>
+                    <div class="review-list">
+                        {% for log in art.interaction_logs if log.review_art %}
+                        <div style="background: #f8f9fa; padding: 12px; border-radius: 8px; margin-bottom: 12px; border-left: 4px solid #333;">
+                            <strong style="display: block; margin-bottom: 5px;">{{ log.visitor.name }} <span style="font-weight: normal; color: #f39c12;">({{ log.rating }}★)</span></strong>
+                            <p style="margin: 0; font-style: italic;">"{{ log.review_art }}"</p>
+                        </div>
+                        {% else %}
+                        <p style="color: #999; text-align: center;">Belum ada ulasan untuk karya ini.</p>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
         </div>
-
-        {% else %}
-        <p>Belum ada ulasan yang masuk.</p>
         {% endfor %}
+    </div>
+
+    <!-- KOLOM KANAN: MUSEUM FEEDBACK (Tetap di posisi saat scroll) -->
+    <div class="museum-section" style="flex: 1; position: sticky; top: 20px; background: #fdfdfd; padding: 20px; border-radius: 12px; border: 1px solid #eaeaea; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+        <h2 style="margin-top: 0;">Museum Feedback</h2>
+        
+        <form action="{{ url_for('add_museum_review') }}" method="POST" style="margin-bottom: 25px;">
+            <textarea name="review_museum" placeholder="Bagaimana pengalaman kunjunganmu?" required style="width: 100%; height: 120px; padding: 12px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 10px;"></textarea>
+            <button type="submit" style="width: 100%; background: #28a745; color: white; border: none; padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer;">Kirim Feedback</button>
+        </form>
+
+        <h4 style="border-bottom: 2px solid #eee; padding-bottom: 8px;">Apa kata mereka:</h4>
+        <div class="museum-logs" style="max-height: 400px; overflow-y: auto; padding-right: 5px;">
+            {% for log in reviews if log.review_museum %}
+            <div style="background: #fff; padding: 12px; margin-bottom: 12px; border-radius: 8px; border: 1px solid #eee;">
+                <strong>{{ log.visitor.name }}</strong>
+                <p style="margin: 5px 0 0 0; font-size: 0.9em; color: #555;">"{{ log.review_museum }}"</p>
+            </div>
+            {% endfor %}
+        </div>
     </div>
 </div>
 {% endblock %}

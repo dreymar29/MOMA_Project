@@ -4,11 +4,11 @@ from models import db, Artist, Art, Visitor, InteractionLog, Staff
 def isi_database():
     with app.app_context():
         data_art = [
-            {"artist": "Joan Snyder", "art": "My August"},
-            {"artist": "Ian Cheng", "art": "3FACE"},
-            {"artist": "Louis Fratino", "art": "Fanciullo"},
-            {"artist": "Michael Armitage", "art": "Head of Koitalel"},
-            {"artist": "Vaginal Davis", "art": "Xochiquetzal, The Precious Feather Flower Goddess of Beauty and Art"}
+            {"id": "118200001", "artist": "Joan Snyder", "art": "My August"},
+            {"id": "118200002", "artist": "Ian Cheng", "art": "3FACE"},
+            {"id": "118200003", "artist": "Louis Fratino", "art": "Fanciullo"},
+            {"id": "118200004", "artist": "Michael Armitage", "art": "Head of Koitalel"},
+            {"id": "118200005", "artist": "Vaginal Davis", "art": "Xochiquetzal, The Precious Feather Flower Goddess of Beauty and Art"}
         ]
 
         for item in data_art:
@@ -18,66 +18,75 @@ def isi_database():
                 db.session.add(artist)
                 db.session.commit()
             
-            if not Art.query.filter_by(name=item["art"]).first():
-                arts = Art(name=item["art"], artist_id=artist.id)
-                db.session.add(arts)
+            if not Art.query.get(item["id"]):
+                new_art = Art(id=item["id"], name=item["art"], artist_id=artist.id)
+                db.session.add(new_art)
 
         visitors = [
-            {"name": "Dida", "gender": "Female", "job": "Student", "pw": "didadidada"},
-            {"name": "Audrey", "gender": "Female", "job": "Student", "pw": "odeyodeydey"},
-            {"name": "Egi", "gender": "Female", "job": "Student", "pw": "egiegigi"},
-            {"name": "Jihan", "gender": "Female", "job": "Student", "pw": "jihanjiji"},
-            {"name": "Tubagus", "gender": "Male", "job": "Student", "pw": "tuthegus"}
+            {"id": "2219200001", "name": "Dida", "gender": "Female", "job": "Student", "pw": "didadidada"},
+            {"id": "2219200002", "name": "Audrey", "gender": "Female", "job": "Student", "pw": "odeyodeydey"},
+            {"id": "2219200003", "name": "Egi", "gender": "Female", "job": "Student", "pw": "egiegigi"},
+            {"id": "2219200004", "name": "Jihan", "gender": "Female", "job": "Student", "pw": "jihanjiji"},
+            {"id": "2219200005", "name": "Tubagus", "gender": "Male", "job": "Student", "pw": "tuthegus"}
         ]
 
         for v in visitors:
-            if not Visitor.query.filter_by(name=v["name"]).first():
-                new_v = Visitor(name=v["name"], gender=v["gender"], job=v["job"], password=v["pw"])
+            if not Visitor.query.get(v["id"]):
+                new_v = Visitor(
+                    id=v["id"], 
+                    name=v["name"], 
+                    gender=v["gender"], 
+                    password=v["pw"]
+                )
                 db.session.add(new_v)
 
-        db.session.commit()
-        print("Semua data berhasil diinput!")
-        
         staff_data = [
-            {"username": "admin", "password": "123"},
-            {"username": "staff_moma", "password": "123"}
+            {"name": "admin", "password": "123"},
+            {"name": "staff_moma", "password": "123"}
         ]
 
         for s in staff_data:
-            if not Staff.query.filter_by(username=s["username"]).first():
-                new_s = Staff(username=s["username"], password=s["password"])
+            if not Staff.query.filter_by(name=s["name"]).first():
+                new_s = Staff(name=s["name"], password=s["password"])
                 db.session.add(new_s)
 
         db.session.commit()
-        print("Database berhasil diisi ulang!")
+        print("Data Artis, Art, Visitor, dan Staff berhasil dicek/ditambah!")
 
-        db.session.commit() 
         interaction = [
-            {"visitor": "Dida", "art": "My August", "or": "Scanned", "audio": "Played"},
-            {"visitor": "Audrey", "art": "3FACE", "or": "Scanned", "audio": "Played"},
-            {"visitor": "Egi", "art": "Fanciullo", "or": "Scanned", "audio": "Played"},
-            {"visitor": "Jihan", "art": "Head of Koitalel", "or": "Scanned", "audio": "Played"},
-            {"visitor": "Tubagus", "art": "Xochiquetzal, The Precious Feather Flower Goddess of Beauty and Art", "or": "Scanned", "audio": "Played"},
+            {"visitor_name": "Dida", 
+             "art_name": "My August", 
+             "artreview": "Luar biasa indahnya!",
+             "museumreview": "Museumnya bersih, tapi AC-nya dingin banget.",
+             "rating": "5"
+             },
+            
+            {"visitor_name": "Audrey", 
+             "art_name": "3FACE", 
+             "artreview": "Konsepnya sangat modern dan unik.",
+             "museumreview": "Suka banget sama tata letak cahayanya.",
+             "rating": "4"
+             },
         ]
 
         for log in interaction:
-            v = Visitor.query.filter_by(name=log["visitor"]).first()
-            a = Art.query.filter_by(name=log["art"]).first()
+            v = Visitor.query.filter_by(name=log["visitor_name"]).first()
+            a = Art.query.filter_by(name=log["art_name"]).first()
 
             if v and a:
                 check_log = InteractionLog.query.filter_by(visitor_id=v.id, art_id=a.id).first()
-                
                 if not check_log:
                     new_log = InteractionLog(
                         visitor_id=v.id, 
                         art_id=a.id, 
-                        or_status=log["or"], 
-                        audio_status=log["audio"]
+                        review_art=log.get("artreview"),
+                        review_museum=log.get("museumreview"),
+                        rating=log.get("rating")
                     )
                     db.session.add(new_log)
 
         db.session.commit()
-        print("Semua data (Visitor & Log) berhasil diinput!")
+        print("Semua proses seed selesai dengan sukses!")
 
 if __name__ == "__main__":
     isi_database()

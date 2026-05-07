@@ -56,63 +56,56 @@ def register():
     if request.method == 'POST':
         name = request.form.get('name')
         gender = request.form.get('gender')
-        job = request.form.get('job')
         pwd = request.form.get('password')
 
-        new_v = Visitor(name=name, gender=gender, job=job, password=pwd)
+        new_v = Visitor(name=name, gender=gender, password=pwd)
         db.session.add(new_v)
         db.session.commit()
         return redirect(url_for('login'))
         
     return render_template('register.html')
 
-@app.route('/add_review/<int:art_id>', methods=['POST'])
+@app.route('/all-reviews')
+def all_reviews():
+    koleksi_art = Art.query.all()
+    page_review = InteractionLog.query.filter(
+        (InteractionLog.review_art != None) | (InteractionLog.review_museum != None)
+    ).all()
+    return render_template('review.html', all_art=koleksi_art, reviews=page_review)
+
+@app.route('/add-review/<art_id>', methods=['POST'])
 def add_review(art_id):
-    try:
-        # Ambil data dari form
-        text = request.form.get('review_text', '').strip()
-        stars = request.form.get('rating')
+    review_art = request.form.get('review_art')
+    visitor_id = session.get('visitor_id')
 
-        # VALIDASI 1: Minimal 10 Kata
-        # .split() memecah kalimat jadi daftar kata berdasarkan spasi
-        jumlah_kata = len(text.split())
-        if jumlah_kata < 10:
-            # Jika kurang dari 10, kita "lempar" ke bagian except
-            raise ValueError(f"Ulasan minimal 10 kata (punya kamu baru {jumlah_kata} kata).")
-
-        # VALIDASI 2: Rating harus dipilih
-        if not stars:
-            raise ValueError("Kamu harus memilih rating bintang!")
-
-        # Jika lolos semua validasi, baru simpan ke DB
+    if review_art and visitor_id:
         new_log = InteractionLog(
-            visitor_id=session.get('user_id', 1), # Anggap ID 1 kalau belum login
+            visitor_id=visitor_id,
             art_id=art_id,
-            review_text=text,
-            rating=int(stars),
-            or_status="Reviewed"
+            review_art=review_art,
         )
-        
         db.session.add(new_log)
         db.session.commit()
-        flash("Ulasan berhasil dikirim!", "success")
+    
+    return redirect(url_for('all_reviews'))
 
-    except ValueError as e:
-        # Bagian ini menangkap pesan error dari 'raise ValueError' di atas
-        db.session.rollback()
-        flash(str(e), "danger") # Mengirim pesan error ke web
-        
-    except Exception as e:
-        # Menangkap error tak terduga (misal database error)
-        db.session.rollback()
-        flash("Terjadi kesalahan sistem.", "danger")
+@app.route('/add-museum-review', methods=['POST'])
+def add_museum_review():
+    review_museum = request.form.get('review_museum')
+    visitor_museum = session.get('visitor_id')
+    rating = request.form.get('rating')
 
-    return redirect(url_for('art'))
+    if review_museum:
+        new_log = InteractionLog(
+            visitor_id=visitor_museum,
+            art_id=None, 
+            review_museum=review_museum,
+            rating=int(rating)
+        )
+        db.session.add(new_log)
+        db.session.commit()
 
-@app.route('/review')
-def all_reviews():
-    daftar_ulasan = InteractionLog.query.filter(InteractionLog.review_text != None).all()
-    return render_template('review.html', reviews=daftar_ulasan)
+    return redirect(url_for('all_reviews'))
 
 if __name__ == "__main__":
     app.run(debug=True)
