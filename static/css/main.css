@@ -1,99 +1,255 @@
-body{
+body {
     margin: 0;
-    font-family: Georgia;
+    font-family: 'Georgia', serif;
+    color: #291C0E;
+    overflow-y: scroll;
     text-align: justify;
 }
 
-
+/* --- 2. NAVBAR & SEARCH SYSTEM --- */
 .navbar {
-    background-color: #fcfbf4; /* Warna krem halus agar tidak kontras tajam */
-    border-bottom: 1px solid #ddd;
-    padding: 12px 0;
-    position: sticky; /* Agar menu tetap ada saat di-scroll */
+    background-color: #E1D4C2;
+    border-bottom: 1px solid #BEB5A9;
+    padding: 10px 0;
+    position: sticky;
     top: 0;
     z-index: 1000;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05); /* Efek bayangan tipis agar tidak ngawang */
 }
 
 .navbar-container {
     max-width: 1100px;
     margin: 0 auto;
     display: flex;
-    justify-content: space-between; /* Menu di kiri, Login di kanan */
+    justify-content: space-between;
     align-items: center;
     padding: 0 20px;
 }
 
 .nav-menu {
-    list-style: none;
-    padding: 0;
-    margin: 0;
     display: flex;
-    gap: 30px;
+    gap: 25px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
 }
 
 .nav-menu a {
     text-decoration: none;
-    font-family: 'Georgia', serif;
-    font-size: 0.9rem;
-    color: #333;
-    letter-spacing: 1px;
+    font-size: 0.85rem;
+    color: #291C0E;
     text-transform: uppercase;
-    transition: 0.3s;
-}
-
-.nav-menu a:hover {
-    color: #888;
-}
-
-.nav-auth .login-btn {
-    text-decoration: none;
+    letter-spacing: 1px;
     font-weight: bold;
-    color: #333;
-    border: 1px solid #333;
-    padding: 8px 20px;
-    border-radius: 25px; /* Bentuk kapsul modern */
-    transition: all 0.3s;
+}
+
+/* ANIMASI SEARCH */
+.nav-search form {
+    display: flex;
+    align-items: center;
+    background: transparent;
+    border-radius: 4px;
+    padding: 0 5px;
+    transition: all 0.4s ease;
+}
+
+.nav-search form.active {
+    background: #fcfbf4;
+    border: 1px solid #291C0E;
+}
+
+.nav-search input {
+    width: 0; /* Ngumpet */
+    border: none;
+    background: transparent;
+    outline: none;
+    font-size: 0.9rem;
+    transition: width 0.4s ease;
+    padding: 0;
+}
+
+.nav-search form.active input {
+    width: 180px; /* Muncul pas diklik */
+    padding: 5px 10px;
+}
+
+.nav-search button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.8rem; /* Ikon Gede */
+    color: #291C0E;
+    display: flex;
+    align-items: center;
+}
+
+.login-btn {
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: #291C0E;
+    border: 1px solid #291C0E;
+    padding: 6px 15px;
+    border-radius: 20px;
+}
+
+/* --- 3. BREADCRUMBS --- */
+.breadcrumb-container {
+    max-width: 1100px;
+    margin: 15px auto 0;
+    padding: 0 20px;
+}
+
+.breadcrumbs {
+    list-style: none;
+    display: flex;
+    gap: 8px;
+    padding: 0;
+    margin: 0;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+}
+
+.breadcrumbs li { color: #A78D78; }
+.breadcrumbs li a { text-decoration: none; color: #6E473B; }
+.breadcrumbs li:not(:last-child)::after {
+    content: "/";
+    margin-left: 8px;
+    color: #BEB5A9;
 }
 
 .nav-auth .login-btn:hover {
-    background-color: #333;
+    background-color: #291C0E;
     color: #fff;
 }
 
-.home-container{
-    align-items: flex-start;
-    gap: 30px;
-    margin: 20px;
+.nav-search form {
+    display: flex;
+    align-items: center;
+    background: #fcfbf4;
+    border: 1px solid #BEB5A9;
+    border-radius: 20px;
+    padding: 2px 12px;
 }
 
-.home-image img{
-    max-width: 900px;
-    height: auto;
-    border-radius: 8px;
+.nav-search input {
+    border: none;
+    background: transparent;
+    padding: 6px;
+    outline: none;
+    font-size: 0.85rem;
+    width: 150px; /* Lebar minimalis */
+    transition: width 0.3s ease;
+}
+
+.nav-search input:focus {
+    width: 200px; /* Melebar saat diklik */
+}
+
+.nav-search button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.breadcrumb-container {
+    max-width: 1100px;
+    margin: 15px auto 0;
+    padding: 0 20px;
+}
+
+.breadcrumbs {
+    list-style: none;
+    display: flex;
+    gap: 8px;
+    padding: 0;
+    margin: 0;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.breadcrumbs li { color: #A78D78; }
+.breadcrumbs li a {
+    text-decoration: none;
+    color: #6E473B;
+}
+
+.breadcrumbs li:not(:last-child)::after {
+    content: "/";
+    margin-left: 8px;
+    color: #BEB5A9;
+}
+
+.home-hero {
+    display: flex;
+    align-items: center;
+    background-color: #fcfbf4;
+    padding: 60px 10%; 
+    gap: 50px;
+}
+
+.hero-content { flex: 1; }
+
+.hero-content h1 {
+    font-size: 2.8rem;
+    line-height: 1.1;
+    text-align: left; 
+    margin: 0 0 20px 0;
+    color: #291C0E;
+}
+
+.hero-image { flex: 1.2; }
+
+.hero-image img {
+    width: 100%;
+    height: 350px;
+    object-fit: cover; 
+    border-radius: 2px;
+    box-shadow: 15px 15px 0px #291C0E; 
+}
+
+.home-container {
+    max-width: 1100px; 
+    margin: 60px auto;
+    padding: 0 20px;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    border-bottom: 2px solid #291C0E;
+    padding-bottom: 10px;
+    margin-bottom: 40px;
+}
+
+.section-header h2 {
+    font-size: 1.8rem;
+    margin: 0;
+    text-transform: uppercase;
 }
 
 .about-main-wrapper {
-    max-width: 1000px; /* Dipersempit agar lebih fokus di tengah */
+    max-width: 1000px; 
     margin: 0 auto;
-    padding: 40px 20px; /* Padding dikurangi agar tidak terlalu turun */
+    padding: 10px 20px; 
 }
 
 .about-hero-title {
     text-align: center;
-    padding: 60px 0; /* Memberikan ruang lega atas-bawah */
-    background-color: #fcfbf4; /* Warna krem tipis agar judul punya area sendiri */
+    padding: 40px 0; 
+    background-color: #fcfbf4; 
     margin-bottom: 50px;
-    border-bottom: 1px solid #eee; /* Garis tipis pemisah visual */
+    border-bottom: 1px solid #eee; 
 }
 
 .about-hero-title h1 {
-    font-size: 2.5rem; /* Ukuran proporsional */
+    font-size: 1.8rem; 
+    letter-spacing: 8px; 
     margin: 0;
-    letter-spacing: 12px; /* Jarak huruf lebar khas galeri seni */
+    color: #291C0E;
     text-transform: uppercase;
-    font-weight: bold;
-    color: #000;
 }
 
 .tagline-new {
@@ -114,20 +270,42 @@ body{
 .about-split-container {
     display: flex;
     gap: 40px;
-    align-items: flex-start; /* Teks sejajar dengan bagian atas gambar */
+    align-items: flex-start; 
 }
 
+.tagline-new {
+    font-size: 0.85rem; 
+    color: #6E473B;
+    margin-top: 5px;
+}
+
+/* Gambar diperkecil */
 .about-visual img {
     width: 100%;
-    max-width: 450px; /* Batasi lebar gambar agar tidak menutupi layar */
+    max-width: 320px; 
     height: auto;
     border-radius: 4px;
-    box-shadow: 0 4px 25px rgba(0,0,0,0.07); /* Shadow lebih halus */
+    box-shadow: 0 6px 20px rgba(0,0,0,0.06); 
+    border: 1px solid #BEB5A9;
 }
 
 .about-content-text h3 {
-    font-size: 1.7rem; /* Judul konten diperkecil */
+    font-size: 1.4rem; 
     margin-top: 0;
+    margin-bottom: 5px;
+    color: #291C0E;
+}
+
+.location-clean {
+    font-size: 0.75rem; 
+    color: #A78D78;
+    letter-spacing: 1px;
+}
+
+.text-body p {
+    font-size: 0.9rem; 
+    line-height: 1.6;
+    margin-bottom: 12px;
 }
 
 .location-clean {
@@ -155,7 +333,6 @@ body{
     width: 100%;
     height: auto;
     border-radius: 4px;
-    /* Efek shadow halus, bukan kotak kaku */
     box-shadow: 0 10px 40px rgba(0,0,0,0.08); 
     border: 1px solid #f0f0f0;
 }
@@ -180,7 +357,7 @@ body{
     line-height: 1.9;
     margin-bottom: 20px;
     color: #444;
-    text-align: left; /* Lebih modern dibanding justify untuk web art */
+    text-align: left; 
 }
 
 @media (max-width: 768px) {
@@ -194,13 +371,30 @@ body{
 .gallery-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 30px; /* Jarak antar foto */
-    padding: 20px 0;
+    gap: 40px;
 }
 
-.art-card {
-    background: #fff;
-    transition: transform 0.3s ease;
+.art-card img {
+    width: 100%;
+    aspect-ratio: 1/1; 
+    object-fit: cover;
+    filter: grayscale(20%); 
+    transition: 0.3s;
+}
+
+.art-card img:hover {
+    filter: grayscale(0%);
+}
+
+.art-info h3 {
+    font-size: 1.1rem;
+    margin: 15px 0 5px 0;
+    color: #291C0E;
+}
+
+.art-info p {
+    color: #A78D78;
+    font-size: 0.85rem;
 }
 
 .art-card:hover {
@@ -256,8 +450,6 @@ body{
     font-weight: bold;
     cursor: pointer;
 }
-
-/* Update di main.css */
 
 .modal-content {
     display: block;

@@ -1,34 +1,34 @@
 {% extends 'base.html' %}
 
-{% block head %}
-{% endblock %}
-
 {% block body %}
+<div class="home-hero">
+    <div class="hero-content">
+        <h1>MoMA: <br>The Museum of Modern Art</h1>
+        <p>Connecting people from around the world to the art of our time.</p>
+    </div>
+    <div class="hero-image">
+        <img src="{{ url_for('static', filename='image/MOMAIMG.jpg') }}" alt="MoMA">
+    </div>
+</div>
 
 <div class="home-container">
-    <h1><u>MoMA: The Museum of Modern Art</u></h1>
-
-    <div class="home-image">
-        <img src="{{ url_for ('static', filename='image/MOMAIMG.jpg')}}" alt="MOMA" width="900px">
+    <div class="section-header">
+        <h2>Top Collection</h2>
+        <a href="{{ url_for('art') }}" class="view-all">View All →</a>
     </div>
-
-    <div class="container">
-    <h2>TOP ART</h2>
 
     <div class="gallery-grid">
         {% for art in arts %}
-
-    <div class="art-card">
-        <div class="art-image">
-            <img src="{{ url_for ('static', filename='image/' + art.id|string + '.jpg') }}" alt="{{ art.name }}">
+        <div class="art-card">
+            <div class="art-image">
+                <img src="{{ url_for('static', filename='image/' + art.id|string + '.jpg') }}" alt="{{ art.name }}">
+            </div>
+            <div class="art-info">
+                <h3>{{ art.name }}</h3>
+                <p>{{ art.artist_data.name }}</p> 
+            </div>
         </div>
-        <div class="art-info">
-            <h3>{{ art.name }}</h3>
-            <p>{{ art.artist_data.name }}</p> 
-        </div>
+        {% endfor %}
     </div>
-    {% endfor %}
-</div>
 </div>
 {% endblock %}
-
