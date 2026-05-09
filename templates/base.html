@@ -32,14 +32,11 @@
                 {% if session.get('user_id') %}
                 <div style="display: flex; align-items: center; gap: 15px;">
                     <a href="{{ url_for('profile') }}"
-                        style="text-decoration: none; color: #000; font-size: 0.75rem; font-weight: bold; text-transform: uppercase; border-bottom: 2px solid #000; padding-bottom: 2px;">
-                        Account: {{ session.get('user_name') }}
+                        style="text-decoration: none; color: #291C0E; font-size: 0.85rem; font-weight: bold; text-transform: uppercase;">
+                        {{ session.get('user_name') }}
                     </a>
 
-                    <a href="{{ url_for('logout') }}"
-                        style="text-decoration: none; color: #666; font-size: 0.7rem; font-weight: bold; text-transform: uppercase; border: 1px solid #666; padding: 4px 8px;">
-                        Logout
-                    </a>
+                    <a href="{{ url_for('logout') }}" class="login-btn">Logout</a>
                 </div>
                 {% else %}
                 <a href="{{ url_for('login') }}" class="login-btn">Login</a>
@@ -47,6 +44,29 @@
             </div>
         </div>
     </nav>
+
+    <div class="breadcrumb-section">
+        <div class="navbar-container">
+            <ul class="breadcrumbs">
+                <li><a href="{{ url_for('index') }}">Home</a></li>
+
+                {% if request.endpoint == 'about' %}
+                <li class="current">About</li>
+                {% elif request.endpoint == 'art' %}
+                <li class="current">Art collection</li>
+                {% elif request.endpoint == 'featured_artist' %}
+                <li class="current">Artists</li>
+                {% elif request.endpoint == 'all_reviews' %}
+                <li class="current">Reviews</li>
+                {% elif request.endpoint == 'profile' %}
+                <li class="current">My profile</li>
+                {% elif request.endpoint == 'art_detail' %}
+                <li><a href="{{ url_for('art') }}">Art</a></li>
+                <li class="current">Details</li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
 
     <script>
         function toggleSearch() {

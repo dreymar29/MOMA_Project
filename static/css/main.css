@@ -26,19 +26,43 @@ body {
 
 .nav-menu {
     display: flex;
-    gap: 25px;
+    gap: 30px;
     list-style: none;
     margin: 0;
     padding: 0;
+    align-items: center;
 }
 
-.nav-menu a {
+.nav-menu:hover li a:not(:hover):not(:has(img)) {
+    opacity: 0.5;
+}
+
+.nav-menu li a {
     text-decoration: none;
     font-size: 0.85rem;
-    color: #291C0E;
+    color: #291C0E; /* Cokelat awal */
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 1.2px;
     font-weight: bold;
+    display: inline-block;
+    transition: all 0.3s ease;
+}
+
+.nav-menu li a:not(:has(img)):hover {
+    color: #5A3E2B !important; 
+    transform: scale(1.1);
+}
+
+.logo-img {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+    filter: none !important;
+}
+
+.nav-menu li a:has(img):hover {
+    transform: none !important;
+    opacity: 1 !important;
 }
 
 /* ANIMASI SEARCH */
@@ -57,7 +81,7 @@ body {
 }
 
 .nav-search input {
-    width: 0; /* Ngumpet */
+    width: 0; 
     border: none;
     background: transparent;
     outline: none;
@@ -67,7 +91,7 @@ body {
 }
 
 .nav-search form.active input {
-    width: 180px; /* Muncul pas diklik */
+    width: 180px; 
     padding: 5px 10px;
 }
 
@@ -75,45 +99,81 @@ body {
     background: none;
     border: none;
     cursor: pointer;
-    font-size: 1.8rem; /* Ikon Gede */
+    font-size: 1.8rem; 
     color: #291C0E;
     display: flex;
     align-items: center;
 }
 
 .login-btn {
+    background-color: transparent; 
+    color: #291C0E !important;    
+    padding: 10px 25px;           
+    border-radius: 50px;
     text-decoration: none;
-    font-size: 0.8rem;
+    font-size: 0.85rem;
     font-weight: bold;
-    color: #291C0E;
-    border: 1px solid #291C0E;
-    padding: 6px 15px;
-    border-radius: 20px;
+    text-transform: uppercase;
+    display: inline-block;
+    transition: 0.3s;
+    border: 2px solid #291C0E;    
+    cursor: pointer;
+    line-height: 1;               
+}
+
+.login-btn:hover {
+    background-color: #291C0E;    /* Berubah cokelat gelap pas hover */
+    color: #E1D4C2 !important;    /* Teks jadi warna krem navbar */
 }
 
 /* --- 3. BREADCRUMBS --- */
-.breadcrumb-container {
-    max-width: 1100px;
-    margin: 15px auto 0;
-    padding: 0 20px;
+.breadcrumb-section {
+    padding: 12px 0;
+    background: transparent;
 }
 
 .breadcrumbs {
     list-style: none;
     display: flex;
-    gap: 8px;
+    align-items: center;
     padding: 0;
     margin: 0;
-    font-size: 0.7rem;
-    text-transform: uppercase;
+    font-family: 'Georgia', serif;
 }
 
-.breadcrumbs li { color: #A78D78; }
-.breadcrumbs li a { text-decoration: none; color: #6E473B; }
+.breadcrumbs li {
+    display: flex;
+    align-items: center;
+    font-size: 0.9rem;
+    color: #6E473B;
+    text-transform: none !important; /* Pastikan tidak capslock */
+}
+
+.breadcrumbs li a {
+    text-decoration: none;
+    color: #A78D78;
+    text-transform: none !important;
+    transition: 0.3s;
+}
+
+.breadcrumbs li a:hover {
+    color: #291C0E;
+    text-decoration: underline;
+}
+
+/* PAKSA PANAH MUNCUL */
 .breadcrumbs li:not(:last-child)::after {
-    content: "/";
-    margin-left: 8px;
-    color: #BEB5A9;
+    content: ">" !important; 
+    margin: 0 10px !important; /* Jarak rapat agar elegan */
+    font-size: 0.75rem !important;
+    color: #BEB5A9 !important;
+    font-family: Arial, sans-serif !important; /* Font khusus simbol */
+}
+
+.breadcrumbs li.current {
+    color: #291C0E;
+    font-weight: bold;
+    text-transform: none !important;
 }
 
 .nav-auth .login-btn:hover {
