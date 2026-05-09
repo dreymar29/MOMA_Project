@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<div style="display: flex; justify-content: center; align-items: center; min-height: 80vh; padding: 20px;">
+    
+    <div style="width: 100%; max-width: 300px; background: #ffffff; padding: 25px; border: 2px solid #000; box-shadow: 8px 8px 0px #000; font-family: 'Helvetica', Arial, sans-serif;">
+        
+        <h3 style="text-align: center; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 5px; font-weight: bold; font-size: 1.1rem;">My Account</h3>
+        <p style="text-align: center; font-size: 0.6rem; margin-bottom: 15px; color: #666; letter-spacing: 1px;">{{ role | upper }} INFORMATION</p>
+        <hr style="border: 0; border-top: 1px solid #eee; margin-bottom: 20px;">
+
+        <div style="margin-bottom: 15px;">
+            <p style="font-size: 0.65rem; font-weight: bold; text-transform: uppercase; color: #999; margin-bottom: 2px;">Name</p>
+            <p style="font-size: 1rem; font-weight: bold; color: #000; margin: 0;">{{ user.name if role == 'visitor' else user.username }}</p>
+        </div>
+
+        {% if role == 'visitor' %}
+        <div style="margin-bottom: 15px;">
+            <p style="font-size: 0.65rem; font-weight: bold; text-transform: uppercase; color: #999; margin-bottom: 2px;">Gender</p>
+            <p style="font-size: 1rem; color: #000; margin: 0;">{{ user.gender }}</p>
+        </div>
+        {% endif %}
+
+        <div style="margin-bottom: 25px;">
+            <p style="font-size: 0.65rem; font-weight: bold; text-transform: uppercase; color: #999; margin-bottom: 2px;">Account Status</p>
+            <p style="font-size: 0.9rem; color: #28a745; margin: 0;">● Active {{ role.capitalize() }}</p>
+        </div>
+
+        <a href="{{ url_for('index') }}" style="display: block; text-align: center; width: 100%; padding: 12px; background: #000; color: #fff; text-decoration: none; font-weight: bold; text-transform: uppercase; font-size: 0.8rem; box-sizing: border-box;">
+            Back to Home
+        </a>
+    </div>
+</div>
+{% endblock %}

@@ -48,34 +48,63 @@ def login():
         username = request.form.get('username')
         password = request.form.get('password')
 
-        if role == 'staff':
-            user = Staff.query.filter_by(username=username, password=password).first()
-        else:
+        if role == 'visitor':
             user = Visitor.query.filter_by(name=username, password=password).first()
+        else:
+            user = Staff.query.filter_by(username=username, password=password).first()
 
         if user:
-            session['visitor_id'] = user.id
+            # Bagian paling penting: menyimpan data ke session
+            session['user_id'] = user.id
             session['user_name'] = username
             session['role'] = role
+            flash(f'Selamat datang, {username}!', 'success')
             return redirect(url_for('index'))
         else:
-            flash('Login gagal! Cek username dan password.')
-            
+            flash('Username atau Password salah!', 'danger')
+    
     return render_template('login.html')
+
+# Copas ini juga di bawah fungsi login untuk fitur Logout
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect(url_for('index'))
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
         name = request.form.get('name')
         gender = request.form.get('gender')
-        pwd = request.form.get('password')
+        password = request.form.get('password')
 
-        new_v = Visitor(name=name, gender=gender, password=pwd)
-        db.session.add(new_v)
-        db.session.commit()
-        return redirect(url_for('login'))
+        # 'job' dihilangkan dari sini
+        new_v = Visitor(name=name, gender=gender, password=password)
         
+        try:
+            db.session.add(new_v)
+            db.session.commit()
+            return redirect(url_for('login'))
+        except:
+            db.session.rollback()
+            return "Gagal simpan data"
+            
     return render_template('register.html')
+
+@app.route('/profile')
+def profile():
+    if not session.get('user_id'):
+        return redirect(url_for('login'))
+    
+    role = session.get('role')
+    user_id = session.get('user_id')
+    
+    if role == 'visitor':
+        user_data = Visitor.query.get(user_id)
+    else:
+        user_data = Staff.query.get(user_id)
+        
+    return render_template('profile.html', user=user_data, role=role)
 
 @app.route('/all-reviews')
 def all_reviews():

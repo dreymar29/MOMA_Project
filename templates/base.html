@@ -13,7 +13,8 @@
     <nav class="navbar">
         <div class="navbar-container">
             <ul class="nav-menu">
-                <li><a href="{{ url_for('index') }}"><img src="{{ url_for ('static', filename='image/MOMALOGO.png') }}" class="logo-img"></a></li>
+                <li><a href="{{ url_for('index') }}"><img src="{{ url_for ('static', filename='image/MOMALOGO.png') }}"
+                            class="logo-img"></a></li>
                 <li><a href="{{ url_for('about') }}">About</a></li>
                 <li><a href="{{ url_for('art') }}">Art</a></li>
                 <li><a href="{{ url_for('featured_artist') }}">Artist</a></li>
@@ -28,7 +29,21 @@
             </div>
 
             <div class="nav-auth">
+                {% if session.get('user_id') %}
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <a href="{{ url_for('profile') }}"
+                        style="text-decoration: none; color: #000; font-size: 0.75rem; font-weight: bold; text-transform: uppercase; border-bottom: 2px solid #000; padding-bottom: 2px;">
+                        Account: {{ session.get('user_name') }}
+                    </a>
+
+                    <a href="{{ url_for('logout') }}"
+                        style="text-decoration: none; color: #666; font-size: 0.7rem; font-weight: bold; text-transform: uppercase; border: 1px solid #666; padding: 4px 8px;">
+                        Logout
+                    </a>
+                </div>
+                {% else %}
                 <a href="{{ url_for('login') }}" class="login-btn">Login</a>
+                {% endif %}
             </div>
         </div>
     </nav>
