@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<div class="home-container">
+    <h1 class="page-title text-center mt-4">Featured Artists at MoMA</h1>
+    <p class="subtitle text-center">Jelajahi visi di balik karya seni legendaris.</p>
+
+    <div class="artist-grid">
+        {% for artist in all_artist %}
+        <div class="artist-card-main">
+            <a href="{{ url_for('artist_detail', artist_id=artist.id) }}" style="text-decoration: none; color: inherit;">
+                <div class="artist-image-wrapper text-center">
+                    <img src="{{ url_for('static', filename='image/' + artist.id|string + '.jpg') }}" 
+                         alt="{{ artist.name }}" 
+                         style="width: 100%; aspect-ratio: 1 / 1; object-fit: cover; border-radius: 10px;">
+                </div>
+                <div class="artist-info text-center mt-2">
+                    <h3>{{ artist.name }}</h3>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

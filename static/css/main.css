@@ -6,7 +6,6 @@ body {
     text-align: justify;
 }
 
-/* --- 2. NAVBAR & SEARCH SYSTEM --- */
 .navbar {
     background-color: #E1D4C2;
     border-bottom: 1px solid #BEB5A9;
@@ -403,7 +402,7 @@ body {
 
 .art-image img {
     width: 100%;
-    height: 300px;
+    height: 100%;
     object-fit: cover;
     border-radius: 4px;
     overflow: hidden;
@@ -491,33 +490,435 @@ body {
     justify-content: center;
 }
 
-/* Star Rating CSS */
-.star-rating {
-    display: flex;
-    flex-direction: row-reverse;
-    justify-content: flex-end;
+.gallery-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
 }
-.star-rating input { display: none; }
-.star-rating label {
-    font-size: 30px;
-    color: #ccc;
+
+.zoom-overlay {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(0,0,0,0.9);
+    justify-content: center;
+    align-items: center;
+}
+
+.zoom-overlay img {
+    max-width: 90%;
+    max-height: 90%;
+    cursor: move;
+}
+        
+.close-zoom {
+    position: absolute;
+    top: 20px; right: 30px;
+    color: white;
+    font-size: 40px;
     cursor: pointer;
 }
-.star-rating input:checked ~ label,
+        
+.art-img-main {
+    cursor: zoom-in;
+    transition: 0.3s;
+    max-width: 100%;
+    border-radius: 8px;
+}
+
+.art-img-main:hover { opacity: 0.8; }
+
+/* Container utama untuk art detail */
+.art-detail-container {
+    max-width: 800px; /* Batasi lebar konten biar nggak meluber ke samping */
+    margin: 0 auto;   /* Bikin kontennya di tengah halaman */
+    padding: 20px;
+}
+
+/* Styling Gambar Masterpiece */
+.art-img-main {
+    width: 100%;      /* Dia bakal ngikutin lebar container-nya */
+    max-width: 500px; /* NAH INI KUNCINYA! Biar gambarnya nggak kegedean */
+    height: auto;     /* Biar nggak gepeng */
+    display: block;
+    margin: 0 auto 20px; /* Bikin gambar di tengah dan kasih jarak bawah */
+    border-radius: 12px; /* Biar sudutnya estetik nggak kaku banget */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1); /* Kasih bayangan tipis biar elegan */
+    cursor: zoom-in;
+}
+
+.review-container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 20px;
+            font-family: 'Georgia', serif;
+        }
+
+        .review-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .review-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            border: 1px solid #eee;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .review-header {
+            border-bottom: 1px solid #f0f0f0;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+
+        .visitor-name {
+            font-weight: bold;
+            color: #333;
+            font-size: 1.1em;
+        }
+
+        .art-tag {
+            display: inline-block;
+            background: #e9ecef;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.85em;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .review-text {
+            font-style: italic;
+            color: #555;
+            line-height: 1.5;
+        }
+
+        .rating-stars {
+            color: #ffc107; /* Warna emas untuk bintang */
+            font-size: 1.2em;
+            margin-top: 10px;
+        }
+
+        .museum-feedback {
+            margin-top: 15px;
+            padding-top: 10px;
+            border-top: 1px dashed #ddd;
+            font-size: 0.9em;
+            color: #777;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 50px;
+            color: #999;
+        }
+
+.museum-feedback-section {
+    padding: 60px 20px;
+    background-color: #f8f9fa;
+}
+
+.feedback-card {
+    max-width: 600px;
+    margin: 0 auto;
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    text-align: center;
+}
+
+.feedback-card h2 {
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.input-group {
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #555;
+}
+
+.input-group textarea, 
+.input-group input {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #eee;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+    box-sizing: border-box;
+}
+
+.input-group textarea:focus {
+    border-color: #333;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+}
+
+.input-group textarea:focus {
+    border-color: #333;
+    outline: none;
+}
+
+.btn-submit-museum {
+    background-color: #333; /* Warna gelap ala MoMA */
+    color: white;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    width: 100%;
+    transition: background 0.3s;
+}
+
+.btn-submit-museum:hover {
+    background-color: #000;
+}
+
+.star-rating {
+    justify-content: center;
+    gap: 5px;            
+    display: inline-flex;
+    flex-direction: row-reverse;
+}
+
+.star-rating input {
+    display: none;
+}
+
+.star-rating label {
+    font-size: 30px;         
+    color: #ddd;            
+    cursor: pointer;
+    transition: color 0.2s;
+    line-height: 1;        
+}
+
+.star-rating input:checked ~ label {
+    color: #ffca08;      
+}
+
 .star-rating label:hover,
 .star-rating label:hover ~ label {
-    color: #f5b301; /* Warna kuning emas */
+    color: #ffca08;
 }
 
-.review-box {
+.rating-wrapper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin: 10px 0;
+}
+
+.art-card {
+    width: 180px; 
+    margin: 12px;
+    display: inline-block;
+    vertical-align: top;
+    text-align: center;
+}
+
+.scan-wrapper {
+    width: 100%;
+    aspect-ratio: 1 / 1; 
+    position: relative;
+    overflow: hidden;
+    background: #000;
+    border-radius: 12px; 
+    cursor: pointer;
+}
+
+.scan-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.art-card p {
     margin-top: 10px;
-    padding: 8px;
-    background-color: #f9f9f9;
-    border-radius: 5px;
-    border-left: 3px solid #333; /* Kasih garis biar estetik */
+    font-size: 0.9rem;
+    color: #333;
+    font-weight: 500;
 }
 
-.review-box p {
+.scan-line {
+    position: absolute;
+    top: 0;
+    left: -150%; 
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(
+        to right, 
+        transparent, 
+        rgba(255, 255, 255, 0.4), 
+        transparent
+    );
+    transform: skewX(-25deg); 
+    z-index: 10;
+}
+
+.scanning .scan-line {
+    animation: lightSweep 1.2s infinite ease-in-out;
+}
+
+@keyframes lightSweep {
+    100% { left: 150%; }
+}
+
+.scan-wrapper::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 0; height: 0;
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    transform: translate(-50%, -50%);
+    transition: all 0.3s ease;
+    z-index: 11;
+    opacity: 0;
+    border-radius: 8px;
+}
+
+.scanning::before {
+    width: 60%; 
+    height: 60%;
+    opacity: 1;
+}
+
+.scanning img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Container utama grid artist */
+.artist-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px; /* Jarak antar card */
+    padding: 20px 0;
+    justify-content: flex-start; /* PENTING: Bikin card nempel ke kiri (ga ditengah) */
+}
+
+/* Styling Card Artist (biar sama kayak Art Card) */
+.artist-card-main {
+    flex: 0 0 calc(25% - 30px); /* Bikin 4 kolom (sesuaikan jika perlu 3 kolom: 33.33%) */
+    min-width: 250px; /* Lebar minimal card */
+    margin-bottom: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.artist-card-main:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.artist-image-wrapper {
+    width: 100%;
+}
+
+.artist-info h3 {
+    font-size: 1.1rem;
     margin: 5px 0;
-    font-style: italic;
+    font-weight: 600;
+    text-align: center;
+}
+
+.artist-info p {
+    margin: 5px 0 0;
+    font-size: 0.85rem;
+    color: #888;
+}
+
+.booklet-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 20px 0;
+}
+
+.booklet-wrapper {
+    display: flex;
+    overflow-x: auto; /* Biar bisa geser di HP */
+    scroll-behavior: smooth;
+    gap: 20px;
+    padding: 20px;
+    scrollbar-width: none; /* Sembunyikan scrollbar di Firefox */
+}
+
+.booklet-wrapper::-webkit-scrollbar {
+    display: none; /* Sembunyikan scrollbar di Chrome/Safari */
+}
+
+.booklet-item {
+    flex: 0 0 250px; /* Lebar tetap tiap item di booklet */
+    transition: transform 0.4s ease;
+}
+
+/* Efek Pop Up pas di-hover */
+.booklet-item:hover {
+    transform: scale(1.1) translateY(-10px);
+    z-index: 10;
+}
+
+.art-preview-card {
+    position: relative;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+.art-preview-card img {
+    width: 100%;
+    height: 350px; /* Ukuran booklet agak tinggi biar kayak brosur berdiri */
+    object-fit: cover;
+}
+
+/* Tombol Navigasi Bulat */
+.nav-btn {
+    background: rgba(0,0,0,0.7);
+    color: white;
+    border: none;
+    padding: 15px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 20;
+    transition: 0.3s;
+}
+
+.nav-btn:hover { background: #000; }
+
+.img-circle-profile {
+    width: 180px;      /* Ukuran lebar */
+    height: 180px;     /* Ukuran tinggi harus sama agar bulat sempurna */
+    object-fit: cover; /* Biar foto nggak penyet/ketarik */
+    border-radius: 50%; /* Ini kuncinya jadi lingkaran */
+    border: 5px solid #f8f9fa; /* Opsional: kasih frame putih tipis */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1); /* Opsional: kasih bayangan halus */
+}
+
+.logo-img {
+    height: 20px; /* Atur tinggi gambar agar sejajar dengan tinggi teks menu */
+    width: auto;  /* Menjaga rasio gambar agar tidak gepeng */
+    vertical-align: middle;
 }

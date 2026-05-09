@@ -18,14 +18,14 @@
     </div>
 
     <div class="gallery-grid">
-        {% for art in arts %}
+        {% for art in all_arts %}
         <div class="art-card">
             <div class="art-image">
                 <img src="{{ url_for('static', filename='image/' + art.id|string + '.jpg') }}" alt="{{ art.name }}">
             </div>
             <div class="art-info">
                 <h3>{{ art.name }}</h3>
-                <p>{{ art.artist_data.name }}</p> 
+                <p>{{ art.author.name }}</p> 
             </div>
         </div>
         {% endfor %}

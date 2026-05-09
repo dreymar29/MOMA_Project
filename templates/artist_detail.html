@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block body %}
+
+<div class="home-container">
+<div class="artist-header">
+    <img src="{{ url_for('static', filename='image/' + artist.id|string + '.jpg') }}" alt="{{ artist.name }}" class="img-circle-profile">
+    <h1>{{ artist.name }}</h1>
+    <p class="bio">{{ artist.biography }}</p>
+</div>
+
+<hr>
+
+<h3>{{ artist.name }}'s Works</h3>
+
+<div class="booklet-container">
+    
+    <div class="booklet-wrapper" id="bookletWrapper">
+        {% for art in artist.arts %}
+        <div class="booklet-item">
+            <div class="art-card">
+                <img src="{{ url_for('static', filename='image/' + art.id|string + '.jpg') }}" alt="{{ art.name }}">
+                <div class="art-info-overlay">
+                    <p>{{ art.name }}</p>
+                    <a href="{{ url_for('art_detail', art_id=art.id) }}" class="view-btn">Lihat Detail</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+</div>
+{% endblock %}

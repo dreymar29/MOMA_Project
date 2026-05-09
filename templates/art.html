@@ -6,21 +6,18 @@
     
     <div class="gallery-grid"> 
         {% for art in all_art %}
+        <div class="booklet-item">
         <div class="art-card">
-            <div class="art-image">
-                <img src="{{ url_for('static', filename='image/' + art.id|string + '.jpg') }}" 
-                     class="art-img"
-                     onclick="openModal(this.src, '{{ art.name }}')">
+            <div class="scan-wrapper js-scan-trigger" data-url="{{ url_for('art_detail', art_id=art.id) }}">
+            <div class="scan-line"></div>
+            <img src="{{ url_for('static', filename='image/' + art.id|string + '.jpg') }}" alt="{{ art.name }}">
             </div>
             
             <div class="art-info">
                 <h3>{{ art.name }}</h3>
-                <p>{{ art.artist_data.name }}</p>
-                
-                <a href="{{ url_for('all_reviews', art_id=art.id) }}" class="btn-review">
-                <button type="button" onclick="openArtModal('{{ art.id }}')"> Berikan ulasan</button>
-                </a>
+                <p>{{ art.author.name }}</p>
             </div>
+        </div>
         </div>
         {% endfor %}
     </div>

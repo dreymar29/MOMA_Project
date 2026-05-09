@@ -4,15 +4,17 @@ from datetime import datetime
 db = SQLAlchemy()
 
 class Artist(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.String(20), primary_key=True)
     name = db.Column(db.String(100), nullable=False)
-    arts = db.relationship('Art', backref='artist_data', lazy=True)
+    biography = db.Column(db.Text)
+    arts = db.relationship('Art', backref='author', lazy=True)
 
 class Art(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     description = db.Column(db.Text)
-    artist_id = db.Column(db.Integer, db.ForeignKey('artist.id'), nullable=False)
+    artist_id = db.Column(db.String(20), db.ForeignKey('artist.id'))
+    audio_path = db.Column(db.String(255), nullable=True) 
     
 class Visitor(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -31,6 +33,9 @@ class InteractionLog(db.Model):
     art_id = db.Column(db.Integer, db.ForeignKey('art.id'))
     review_art = db.Column(db.Text, nullable=True)
     review_museum = db.Column(db.Text, nullable=True)
-    rating = db.Column(db.String, nullable=True)
-    art = db.relationship('Art', backref='interaction_logs')
-    visitor = db.relationship('Visitor', backref='interaction_logs')
+    rating = db.Column(db.Integer, nullable=True)
+    scanned = db.Column(db.Boolean, default=False)
+    audio_played = db.Column(db.Boolean, default=False)
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+    art_data = db.relationship('Art', backref='interaction_logs')
+    visitor_data = db.relationship('Visitor', backref='logs')

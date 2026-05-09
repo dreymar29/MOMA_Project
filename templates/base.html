@@ -13,9 +13,10 @@
     <nav class="navbar">
         <div class="navbar-container">
             <ul class="nav-menu">
+                <li><a href="{{ url_for('index') }}"><img src="{{ url_for ('static', filename='image/MOMALOGO.png') }}" class="logo-img"></a></li>
                 <li><a href="{{ url_for('about') }}">About</a></li>
                 <li><a href="{{ url_for('art') }}">Art</a></li>
-                <li><a href="{{ url_for('artist') }}">Artist</a></li>
+                <li><a href="{{ url_for('featured_artist') }}">Artist</a></li>
                 <li><a href="{{ url_for('all_reviews') }}">Review</a></li>
             </ul>
 
