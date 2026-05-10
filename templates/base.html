@@ -4,6 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
     <link rel="stylesheet" href="{{ url_for ('static', filename='css/main.css') }}">
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
     {% block head %} {% endblock %}
@@ -23,7 +27,7 @@
 
             <div class="nav-search">
                 <form action="/search" method="GET" id="searchForm">
-                    <input type="text" name="q" id="searchInput" placeholder="Search art...">
+                    <input type="text" name="q" id="searchInput" placeholder="Search...">
                     <button type="button" onclick="toggleSearch()" id="searchBtn">⌕</button>
                 </form>
             </div>
@@ -53,7 +57,7 @@
                 {% if request.endpoint == 'about' %}
                 <li class="current">About</li>
                 {% elif request.endpoint == 'art' %}
-                <li class="current">Art collection</li>
+                <li class="current">Art</li>
                 {% elif request.endpoint == 'featured_artist' %}
                 <li class="current">Artists</li>
                 {% elif request.endpoint == 'all_reviews' %}

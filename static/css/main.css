@@ -1,9 +1,17 @@
 body {
     margin: 0;
-    font-family: 'Georgia', serif;
+    font-family: 'Inter', sans-serif; /* Berubah jadi minimalis */
     color: #291C0E;
     overflow-y: scroll;
     text-align: justify;
+}
+
+p, span, div, h1, h2, h3, h4, h5, h6 {
+    font-family: 'Inter', sans-serif !important;
+}
+
+input, button, textarea, select {
+    font-family: 'Inter', sans-serif !important;
 }
 
 .navbar {
@@ -39,17 +47,26 @@ body {
 
 .nav-menu li a {
     text-decoration: none;
+    font-family: 'Inter', sans-serif; /* Font baru */
     font-size: 0.85rem;
-    color: #291C0E; /* Cokelat awal */
+    color: #291C0E;
     text-transform: uppercase;
-    letter-spacing: 1.2px;
-    font-weight: bold;
-    display: inline-block;
-    transition: all 0.3s ease;
+    letter-spacing: 2px;
+    font-weight: 800; /* Font lebih strong sesuai permintaan */
+    
+    /* Transisi asli kamu jangan dihapus, biarkan tetap ada di sini */
+    transition: 0.3s; 
+    display: flex;
+    align-items: center;
+}
+
+.nav-menu li a:hover {
+    color: #000;
+    opacity: 0.7;
 }
 
 .nav-menu li a:not(:has(img)):hover {
-    color: #5A3E2B !important; 
+    color: #291C0E !important; 
     transform: scale(1.1);
 }
 
@@ -128,52 +145,48 @@ body {
 
 /* --- 3. BREADCRUMBS --- */
 .breadcrumb-section {
-    padding: 12px 0;
-    background: transparent;
+    background-color: #f9f9f9; 
+    padding: 15px 0;
+    border-bottom: 1px solid #eee;
 }
 
 .breadcrumbs {
     list-style: none;
     display: flex;
-    align-items: center;
-    padding: 0;
+    gap: 12px;
     margin: 0;
-    font-family: 'Georgia', serif;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+    /* Perintah Uppercase dibuang total dari sini */
 }
 
-.breadcrumbs li {
-    display: flex;
-    align-items: center;
-    font-size: 0.9rem;
-    color: #6E473B;
-    text-transform: none !important; /* Pastikan tidak capslock */
+/* Pemisah tanda > */
+.breadcrumbs li:not(:last-child)::after {
+    content: ">"; 
+    margin-left: 12px;
+    color: #BEB5A9;
+    font-weight: 400;
+    font-size: 0.6rem;
 }
 
 .breadcrumbs li a {
     text-decoration: none;
-    color: #A78D78;
-    text-transform: none !important;
+    color: #8B7E6D;
+    font-weight: 700; /* Font Strong */
     transition: 0.3s;
+    text-transform: none; /* Memastikan tidak dipaksa capslock */
 }
 
 .breadcrumbs li a:hover {
     color: #291C0E;
-    text-decoration: underline;
-}
-
-/* PAKSA PANAH MUNCUL */
-.breadcrumbs li:not(:last-child)::after {
-    content: ">" !important; 
-    margin: 0 10px !important; /* Jarak rapat agar elegan */
-    font-size: 0.75rem !important;
-    color: #BEB5A9 !important;
-    font-family: Arial, sans-serif !important; /* Font khusus simbol */
 }
 
 .breadcrumbs li.current {
     color: #291C0E;
-    font-weight: bold;
-    text-transform: none !important;
+    font-weight: 800; /* Font Paling Strong */
+    text-transform: none; /* Memastikan tidak dipaksa capslock */
 }
 
 .nav-auth .login-btn:hover {
@@ -209,35 +222,6 @@ body {
     border: none;
     cursor: pointer;
     font-size: 0.9rem;
-}
-
-.breadcrumb-container {
-    max-width: 1100px;
-    margin: 15px auto 0;
-    padding: 0 20px;
-}
-
-.breadcrumbs {
-    list-style: none;
-    display: flex;
-    gap: 8px;
-    padding: 0;
-    margin: 0;
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.breadcrumbs li { color: #A78D78; }
-.breadcrumbs li a {
-    text-decoration: none;
-    color: #6E473B;
-}
-
-.breadcrumbs li:not(:last-child)::after {
-    content: "/";
-    margin-left: 8px;
-    color: #BEB5A9;
 }
 
 .home-hero {

@@ -11,29 +11,80 @@
     </div>
 </div>
 
-<div style="max-width: 1100px; margin: 60px auto; padding: 0 20px; font-family: sans-serif;">
-    
-    <div style="border-bottom: 2px solid #000; padding-bottom: 10px; margin-bottom: 40px; display: flex; justify-content: space-between; align-items: baseline;">
-        <h2 style="font-size: 1.8rem; font-weight: bold; text-transform: uppercase; margin: 0;">Our Collection</h2>
-        <a href="{{ url_for('art') }}" style="text-decoration: none; color: #000; font-weight: bold; font-size: 0.8rem;">VIEW ALL →</a>
+<div style="max-width: 900px; margin: 80px auto; padding: 0 20px; font-family: 'Helvetica', Arial, sans-serif;">
+    <div style="text-align: center; margin-bottom: 50px;">
+        <p
+            style="text-transform: uppercase; letter-spacing: 3px; font-size: 0.7rem; color: #888; font-weight: bold; margin-bottom: 10px;">
+            Founded in 1929</p>
+        <h2
+            style="font-size: 2.5rem; font-weight: 900; line-height: 1; margin: 0; letter-spacing: -1px; text-transform: uppercase;">
+            A Radiant Revolution</h2>
     </div>
 
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
-        {% for art in all_arts[:3] %}
-        <div style="background: #fff; border: 1px solid #eee; transition: 0.3s;">
-            <a href="{{ url_for('art_detail', art_id=art.id) }}" style="text-decoration: none; color: inherit;">
-                <div style="width: 100%; height: 350px; overflow: hidden;">
-                    <img src="{{ url_for('static', filename='image/' + art.id|string + '.jpg') }}" 
-                         alt="{{ art.name }}" 
-                         style="width: 100%; height: 100%; object-fit: cover;">
-                </div>
-                <div style="padding: 20px;">
-                    <h3 style="font-size: 1.1rem; margin: 0 0 5px 0; font-weight: bold; text-transform: uppercase;">{{ art.name }}</h3>
-                    <p style="font-size: 0.9rem; color: #666; margin: 0;">{{ art.author.name }}</p>
-                </div>
+    <div style="display: flex; gap: 40px; align-items: flex-start; margin-bottom: 40px;">
+        <div style="flex: 1;">
+            <p
+                style="font-family: 'Inter', sans-serif; font-size: 1rem; line-height: 1.8; color: #444; font-weight: 400; text-align: justify;">
+                In an era of rapid change, MoMA stands as a beacon of creative expression. Founded with a revolutionary
+                spirit, it continues to redefine what a museum can be—a place where the past meets the present, and
+                where art inspires the future.
+            </p>
+        </div>
+        <div style="flex: 1;">
+            <p
+                style="font-family: 'Helvetica', Arial, sans-serif; font-size: 0.9rem; line-height: 1.6; color: #666; margin: 0; text-align: justify;">
+                They established MoMA as the world's first museum dedicated to the "art of our time." Today, we continue
+                their legacy by bringing the most thought-provoking modern masterpieces to the global stage.
+            </p>
+            <a href="{{ url_for('about') }}"
+                style="display: inline-block; margin-top: 20px; color: #000; font-weight: bold; text-decoration: none; border-bottom: 2px solid #000; padding-bottom: 3px; font-size: 0.8rem; text-transform: uppercase;">
+                Read Our Story →
             </a>
         </div>
-        {% endfor %}
+    </div>
+</div>
+
+<div style="background: #f9f9f9; padding: 60px 20px; border-top: 1px solid #eee;">
+    <div
+        style="max-width: 1000px; margin: 0 auto; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 40px; font-family: 'Helvetica', Arial, sans-serif;">
+
+        <div style="flex: 1; min-width: 250px;">
+            <h4
+                style="text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem; margin-bottom: 20px; font-weight: bold; color: #000;">
+                Visit MoMA</h4>
+            <p style="font-size: 0.85rem; line-height: 1.8; color: #555;">
+                11 West 53rd Street, New York, NY 10019<br>
+                <span style="display: block; margin-top: 10px;">
+                    <strong>Open Daily:</strong> 10:30 a.m. – 5:30 p.m.<br>
+                    <strong>Saturdays:</strong> Until 7:00 p.m.
+                </span>
+            </p>
+        </div>
+
+        <div style="flex: 1; min-width: 250px;">
+            <h4
+                style="text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem; margin-bottom: 20px; font-weight: bold; color: #000;">
+                Voices of our Visitors</h4>
+            <p style="font-size: 0.85rem; line-height: 1.8; color: #555; margin-bottom: 20px;">
+                Discover how art impacts our community through visitor reviews and stories.
+            </p>
+            <a href="{{ url_for('all_reviews') }}"
+                style="text-decoration: none; color: #fff; background: #000; padding: 12px 25px; font-size: 0.75rem; font-weight: bold; text-transform: uppercase; display: inline-block;">
+                Explore Reviews
+            </a>
+        </div>
+
+    </div>
+
+    <div
+        style="max-width: 1000px; margin: 50px auto 0; padding-top: 25px; border-top: 1px solid #ddd; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+        <p style="font-size: 0.65rem; color: #999; text-transform: uppercase; letter-spacing: 1px; margin: 0;">&copy;
+            2024 The Museum of Modern Art</p>
+        <div style="display: flex; gap: 20px;">
+            <span style="font-size: 0.65rem; color: #999; text-transform: uppercase; letter-spacing: 1px;">Terms</span>
+            <span
+                style="font-size: 0.65rem; color: #999; text-transform: uppercase; letter-spacing: 1px;">Privacy</span>
+        </div>
     </div>
 </div>
 {% endblock %}

@@ -101,10 +101,16 @@ def profile():
     
     if role == 'visitor':
         user_data = Visitor.query.get(user_id)
+        # Ambil riwayat review visitor ini, urut dari yang terbaru
+        user_logs = InteractionLog.query.filter_by(visitor_id=user_id).order_by(InteractionLog.timestamp.desc()).all()
+        # Ambil waktu aktivitas terakhir dari log ulasan
+        last_activity = user_logs[0].timestamp if user_logs else "Belum ada aktivitas"
     else:
         user_data = Staff.query.get(user_id)
+        user_logs = []
+        last_activity = "N/A"
         
-    return render_template('profile.html', user=user_data, role=role)
+    return render_template('profile.html', user=user_data, role=role, logs=user_logs, last_active=last_activity)
 
 @app.route('/all-reviews')
 def all_reviews():
