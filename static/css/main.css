@@ -736,7 +736,7 @@ body {
     outline: none;
 }
 
-.btn-submit-museum {
+.btn-submit-art {
     background-color: #333; /* Warna gelap ala MoMA */
     color: white;
     padding: 15px 30px;
@@ -748,7 +748,7 @@ body {
     transition: background 0.3s;
 }
 
-.btn-submit-museum:hover {
+.btn-submit-art:hover {
     background-color: #000;
 }
 

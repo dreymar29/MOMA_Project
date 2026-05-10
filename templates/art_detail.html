@@ -64,11 +64,14 @@
                 </div>
 
                 <div class="input-group">
-                    <label for="review_museum">Tulis ulasanmu untuk {{ art.name }} milik {{ art.author.name }} </label>
-                    <textarea name="review_museum" id="review_museum" placeholder="Minimal 5 kata." required></textarea>
+                    <label for="review_art">Tulis ulasanmu untuk {{ art.name }} milik {{ art.author.name }} </label>
+                    <textarea name="review_art" id="review_art" placeholder="Minimal 5 kata." required></textarea>
+                </div>
+
+                <div data-url="{{ url_for ('all_reviews', art_id=art.id) }}">
+                <button type="submit" class="btn-submit-art">Kirim Ulasan</button>
                 </div>
             </form>
-            <button type="submit" class="btn-submit-museum">Kirim Ulasan</button>
             </div>
         </div>
     </div>

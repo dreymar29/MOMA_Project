@@ -32,7 +32,6 @@ class InteractionLog(db.Model):
     visitor_id = db.Column(db.Integer, db.ForeignKey('visitor.id'))
     art_id = db.Column(db.Integer, db.ForeignKey('art.id'))
     review_art = db.Column(db.Text, nullable=True)
-    review_museum = db.Column(db.Text, nullable=True)
     rating = db.Column(db.Integer, nullable=True)
     scanned = db.Column(db.Boolean, default=False)
     audio_played = db.Column(db.Boolean, default=False)

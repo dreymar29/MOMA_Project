@@ -7,9 +7,11 @@ def isi_database():
             {
                 "id_artist": "919200001", 
                 "name": "Joan Snyder",
+                "biography": "Born April 16, 1940 in Highland Park, NJ, Joan Snyder received her AB from Douglass College in 1962 and her MFA from Rutgers University in 1966. Snyder has been the recipient of several awards and distinctions, including a National Endowment for the Arts Fellowship in 1974, a John Simon Guggenheim Memorial Fellowship in 1983, a MacArthur Fellowship in 2007 and elected to the American Academy of Arts and Letters in 2026.",
                 "art": [
                     {"id": "118200001", 
                      "name": "My August",
+                     "description": "2023, Oil and acrylic paint, papier-mâché, straw, flower stems, rosebuds, ink, and paper on linen ; 52 x 72",
                      "audio": "0238140001.mp3"}
                 ]
             }
@@ -26,7 +28,7 @@ def isi_database():
                 db.session.add(artist)
                 db.session.commit() 
 
-            for art in item["arts"]:
+            for art in item["art"]:
                 if not Art.query.get(art["id"]):
                     new_art = Art(
                         id=art["id"], 

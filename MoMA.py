@@ -110,40 +110,30 @@ def profile():
 def all_reviews():
     koleksi_art = Art.query.all()
     page_review = InteractionLog.query.filter(
-        (InteractionLog.review_art != None) | (InteractionLog.review_museum != None)
-    ).all()
+        (InteractionLog.review_art != None)).all()
     return render_template('review.html', all_art=koleksi_art, reviews=page_review)
 
 @app.route('/add-art-review/<int:art_id>', methods=['POST'])
 def add_review(art_id):
     r_art = request.form.get('review_art')
-    v_id = session.get('visitor_id')
+    v_id = session.get('user_id') 
+    rating = request.form.get('rating')
 
-    if v_id:
+    print(f"Debug: User ID = {v_id}, Rating = {rating}, Art ID = {art_id}")
+
+    if v_id and rating: 
         new_log = InteractionLog(
             visitor_id=v_id,
             art_id=art_id,
-            review_art=r_art
-        )
-        db.session.add(new_log)
-        db.session.commit()
-    return redirect(url_for('all_reviews'))
-
-@app.route('/add-museum-review', methods=['POST'])
-def add_museum_review():
-    review_museum = request.form.get('review_museum')
-    visitor_museum = session.get('visitor_id')
-    rating = request.form.get('rating')
-
-    if review_museum:
-        new_log = InteractionLog(
-            visitor_id=visitor_museum,
-            art_id=None, 
-            review_museum=review_museum,
+            review_art=r_art,
             rating=int(rating)
         )
         db.session.add(new_log)
         db.session.commit()
+        flash('Ulasan berhasil dikirim!', 'success')
+    else:
+        flash('Gagal kirim review. Pastikan kamu sudah login dan mengisi rating.', 'danger')
+        
     return redirect(url_for('all_reviews'))
 
 if __name__ == "__main__":
