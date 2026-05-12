@@ -413,8 +413,59 @@ input, button, textarea, select {
 
 .gallery-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 40px;
+    grid-template-columns: repeat(4, 1fr); /* Tetap 4 kolom */
+    gap: 20px; /* Jarak antar art dipersempit sedikit agar tidak terlalu renggang */
+    width: 100%;
+    justify-items: center;
+    margin-top: 30px;
+}
+
+/* Pastikan art-card mengisi penuh kolom grid tanpa merusak animasi */
+.art-card {
+    width: 100% !important;
+    max-width: 180px; /* Ukuran ini akan membuat kartu terlihat lebih kecil dan rapi */
+    margin: 0 auto !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.3s ease;
+}
+
+/* Mengatur item agar tidak memiliki lebar tetap yang merusak grid */
+.booklet-item {
+    flex: none !important;
+    width: 100%;
+}
+
+/* --- ANIMASI TETAP DIPERTAHANKAN (JANGAN DIHAPUS) --- */
+.scan-wrapper {
+    width: 100%;
+    aspect-ratio: 1 / 1; 
+    position: relative;
+    overflow: hidden;
+    background: #000;
+    border-radius: 12px; 
+    cursor: pointer;
+}
+
+/* Menjaga agar gambar tetap responsif di dalam grid */
+.scan-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Responsif: Agar di layar kecil tidak dipaksa 4 kolom */
+@media (max-width: 1024px) {
+    .gallery-grid {
+        grid-template-columns: repeat(2, 1fr); /* 2 kolom di tablet */
+    }
+}
+
+@media (max-width: 480px) {
+    .gallery-grid {
+        grid-template-columns: 1fr; /* 1 kolom di HP */
+    }
 }
 
 .art-card img {
@@ -430,14 +481,15 @@ input, button, textarea, select {
 }
 
 .art-info h3 {
-    font-size: 1.1rem;
-    margin: 15px 0 5px 0;
-    color: #291C0E;
+    font-size: 0.9rem; /* Ukuran judul lebih kecil */
+    font-weight: 700;
+    margin-top: 8px;
+    text-align: center;
 }
 
 .art-info p {
-    color: #A78D78;
-    font-size: 0.85rem;
+    font-size: 0.75rem; /* Ukuran nama artist lebih kecil */
+    color: #777;
 }
 
 .art-card:hover {
@@ -965,4 +1017,122 @@ input, button, textarea, select {
     height: 20px; /* Atur tinggi gambar agar sejajar dengan tinggi teks menu */
     width: auto;  /* Menjaga rasio gambar agar tidak gepeng */
     vertical-align: middle;
+}
+
+/* Style Khusus Tombol di Profile */
+.action-btn-edit, .action-btn-delete {
+    padding: 6px 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.3s ease; /* Mengikuti pola transisi di main.css */
+    display: inline-block;
+}
+
+.action-btn-edit {
+    background-color: #E1D4C2; /* Senada dengan Navbar */
+    color: #291C0E;
+    border: 1px solid #BEB5A9;
+}
+
+.action-btn-edit:hover {
+    background-color: #BEB5A9;
+    transform: translateY(-2px);
+}
+
+.action-btn-delete {
+    background-color: transparent;
+    color: #d9534f;
+    border: 1px solid #d9534f;
+}
+
+.action-btn-delete:hover {
+    background-color: #d9534f;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(217, 83, 79, 0.2);
+}
+
+.user-name-display {
+    text-decoration: none; 
+    color: #291C0E; 
+    font-size: 0.85rem; 
+    font-weight: bold; 
+    text-transform: uppercase;
+}
+
+/* Tombol Hamburger tersembunyi di Desktop */
+.mobile-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 4px;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.mobile-toggle span {
+    width: 20px;
+    height: 2px;
+    background-color: #291C0E;
+    transition: 0.3s;
+}
+
+@media (max-width: 768px) {
+    .navbar-container {
+        justify-content: space-between;
+    }
+
+    .mobile-toggle {
+        display: flex; /* Muncul di HP */
+        order: 1;
+    }
+
+    /* Navbar berubah jadi menu dropdown */
+    .nav-menu {
+        display: none; 
+        flex-direction: column;
+        position: absolute;
+        top: 60px; /* Di bawah navbar */
+        left: 0;
+        width: 100%;
+        background-color: #E1D4C2;
+        padding: 20px 0;
+        gap: 15px;
+        border-bottom: 2px solid #BEB5A9;
+        z-index: 999;
+        text-align: center;
+    }
+
+    .nav-menu.active {
+        display: flex; /* Muncul saat diklik */
+    }
+
+    .nav-menu li a {
+        justify-content: center;
+    }
+
+    .nav-right-group {
+        order: 2;
+    }
+
+    /* Sembunyikan Nama User di HP agar tidak penuh, ganti ke icon/button logout saja */
+    .user-name-display {
+        display: none;
+    }
+
+    .nav-search input {
+        width: 80px; /* Search lebih kecil di HP */
+    }
+
+    .nav-search form.active input {
+        width: 120px;
+    }
+
+    .login-btn {
+        padding: 8px 15px;
+        font-size: 0.7rem;
+    }
 }
