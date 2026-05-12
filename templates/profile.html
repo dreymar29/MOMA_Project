@@ -38,6 +38,13 @@
                 <p style="margin: 5px 0; font-weight: bold;">{{ log.art_data.name }}</p>
                 <p style="margin: 5px 0; font-size: 0.9rem; color: #444;">"{{ log.review_art if log.review_art else 'No comment provided' }}"</p>
                 <p style="margin: 0; color: #f39c12;">{{ "★" * log.rating }}{{ "☆" * (5 - log.rating) }}</p>
+            
+                <div style="margin-top: 10px; display: flex; gap: 10px;">
+                    <a href="{{ url_for('edit_review', log_id=log.id) }}" style="font-size: 0.7rem; color: #007bff; text-decoration: none;">Edit</a>
+                    <a href="{{ url_for('delete_review', log_id=log.id) }}" 
+                    style="font-size: 0.7rem; color: red; text-decoration: none;" 
+                    onclick="return confirm('Hapus ulasan ini?')">Delete</a>
+                </div>
             </div>
             {% endfor %}
         {% else %}

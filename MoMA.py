@@ -101,9 +101,7 @@ def profile():
     
     if role == 'visitor':
         user_data = Visitor.query.get(user_id)
-        # Ambil riwayat review visitor ini, urut dari yang terbaru
         user_logs = InteractionLog.query.filter_by(visitor_id=user_id).order_by(InteractionLog.timestamp.desc()).all()
-        # Ambil waktu aktivitas terakhir dari log ulasan
         last_activity = user_logs[0].timestamp if user_logs else "Belum ada aktivitas"
     else:
         user_data = Staff.query.get(user_id)
@@ -141,6 +139,30 @@ def add_review(art_id):
         flash('Gagal kirim review. Pastikan kamu sudah login dan mengisi rating.', 'danger')
         
     return redirect(url_for('all_reviews'))
+
+@app.route('/edit-review/<int:log_id>', methods=['GET', 'POST'])
+def edit_review(log_id):
+    review = InteractionLog.query.get_or_404(log_id)
+    
+    if request.method == 'POST':
+        review.review_art = request.form.get('review_art')
+        review.rating = int(request.form.get('rating'))
+        db.session.commit()
+        flash('Ulasan berhasil diperbarui!', 'success')
+        return redirect(url_for('profile'))
+        
+    return render_template('edit_review.html', review=review)
+
+@app.route('/delete-review/<int:log_id>')
+def delete_review(log_id):
+    review = InteractionLog.query.get_or_404(log_id)
+    
+    if session.get('user_id') == review.visitor_id:
+        db.session.delete(review)
+        db.session.commit()
+        flash('Ulasan berhasil dihapus.', 'success')
+    
+    return redirect(url_for('profile'))
 
 if __name__ == "__main__":
     app.run(debug=True)
