@@ -966,3 +966,40 @@ input, button, textarea, select {
     width: auto;  /* Menjaga rasio gambar agar tidak gepeng */
     vertical-align: middle;
 }
+
+/* Style Khusus Tombol di Profile */
+.action-btn-edit, .action-btn-delete {
+    padding: 6px 12px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.3s ease; /* Mengikuti pola transisi di main.css */
+    display: inline-block;
+}
+
+.action-btn-edit {
+    background-color: #E1D4C2; /* Senada dengan Navbar */
+    color: #291C0E;
+    border: 1px solid #BEB5A9;
+}
+
+.action-btn-edit:hover {
+    background-color: #BEB5A9;
+    transform: translateY(-2px);
+}
+
+.action-btn-delete {
+    background-color: transparent;
+    color: #d9534f;
+    border: 1px solid #d9534f;
+}
+
+.action-btn-delete:hover {
+    background-color: #d9534f;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(217, 83, 79, 0.2);
+}
