@@ -51,10 +51,9 @@ def login():
         if role == 'visitor':
             user = Visitor.query.filter_by(name=username, password=password).first()
         else:
-            user = Staff.query.filter_by(username=username, password=password).first()
+            user = Staff.query.filter_by(name=username, password=password).first()
 
         if user:
-            # Bagian paling penting: menyimpan data ke session
             session['user_id'] = user.id
             session['user_name'] = username
             session['role'] = role
@@ -65,7 +64,6 @@ def login():
     
     return render_template('login.html')
 
-# Copas ini juga di bawah fungsi login untuk fitur Logout
 @app.route('/logout')
 def logout():
     session.clear()
@@ -78,7 +76,6 @@ def register():
         gender = request.form.get('gender')
         password = request.form.get('password')
 
-        # 'job' dihilangkan dari sini
         new_v = Visitor(name=name, gender=gender, password=password)
         
         try:

@@ -16,7 +16,13 @@
 <body>
     <nav class="navbar">
         <div class="navbar-container">
-            <ul class="nav-menu">
+            <div class="mobile-toggle" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
+            <ul class="nav-menu" id="navMenu">
                 <li><a href="{{ url_for('index') }}"><img src="{{ url_for ('static', filename='image/MOMALOGO.png') }}"
                             class="logo-img"></a></li>
                 <li><a href="{{ url_for('about') }}">About</a></li>
@@ -25,26 +31,26 @@
                 <li><a href="{{ url_for('all_reviews') }}">Review</a></li>
             </ul>
 
-            <div class="nav-search">
-                <form action="/search" method="GET" id="searchForm">
-                    <input type="text" name="q" id="searchInput" placeholder="Search...">
-                    <button type="button" onclick="toggleSearch()" id="searchBtn">⌕</button>
-                </form>
-            </div>
-
-            <div class="nav-auth">
-                {% if session.get('user_id') %}
-                <div style="display: flex; align-items: center; gap: 15px;">
-                    <a href="{{ url_for('profile') }}"
-                        style="text-decoration: none; color: #291C0E; font-size: 0.85rem; font-weight: bold; text-transform: uppercase;">
-                        {{ session.get('user_name') }}
-                    </a>
-
-                    <a href="{{ url_for('logout') }}" class="login-btn">Logout</a>
+            <div class="nav-right-group" style="display: flex; align-items: center; gap: 15px;">
+                <div class="nav-search">
+                    <form action="/search" method="GET" id="searchForm">
+                        <input type="text" name="q" id="searchInput" placeholder="Search...">
+                        <button type="button" onclick="toggleSearch()" id="searchBtn">⌕</button>
+                    </form>
                 </div>
-                {% else %}
-                <a href="{{ url_for('login') }}" class="login-btn">Login</a>
-                {% endif %}
+
+                <div class="nav-auth">
+                    {% if session.get('user_id') %}
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <a href="{{ url_for('profile') }}" class="user-name-display">
+                            {{ session.get('user_name') }}
+                        </a>
+                        <a href="{{ url_for('logout') }}" class="login-btn">Logout</a>
+                    </div>
+                    {% else %}
+                    <a href="{{ url_for('login') }}" class="login-btn">Login</a>
+                    {% endif %}
+                </div>
             </div>
         </div>
     </nav>
@@ -60,6 +66,13 @@
                 <li class="current">Art</li>
                 {% elif request.endpoint == 'featured_artist' %}
                 <li class="current">Artists</li>
+
+                {# --- TAMBAHKAN BARIS INI UNTUK DETAIL ARTIST --- #}
+                {% elif request.endpoint == 'artist_detail' %}
+                <li><a href="{{ url_for('featured_artist') }}">Artists</a></li>
+                <li class="current">Profile</li>
+                {# ---------------------------------------------- #}
+
                 {% elif request.endpoint == 'all_reviews' %}
                 <li class="current">Reviews</li>
                 {% elif request.endpoint == 'profile' %}
@@ -82,6 +95,11 @@
             } else if (input.value.trim() !== "") {
                 form.submit();
             }
+        }
+
+        function toggleMenu() {
+            const nav = document.getElementById('navMenu');
+            nav.classList.toggle('active');
         }
     </script>
 
