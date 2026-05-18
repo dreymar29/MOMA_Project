@@ -27,18 +27,17 @@
                             class="logo-img"></a></li>
                 <li><a href="{{ url_for('about') }}">About</a></li>
                 <li><a href="{{ url_for('art') }}">Art</a></li>
-                <li><a href="{{ url_for('featured_artist') }}">Artist</a></li>
-                <li><a href="{{ url_for('all_reviews') }}">Review</a></li>
+                <li><a href="{{ url_for('featured_artist') }}">Artists</a></li>
+                <li><a href="{{ url_for('all_reviews') }}">Reviews</a></li>
+                
+                {% if session.get('role') == 'staff' %}
+                <li><a href="{{ url_for('manage_art') }}">Manage Art</a></li>
+                <li><a href="{{ url_for('manage_artists') }}">Manage Artist</a></li>
+                <li><a href="{{ url_for('add_art') }}">Add</a></li>
+                {% endif %}
             </ul>
 
             <div class="nav-right-group" style="display: flex; align-items: center; gap: 15px;">
-                <div class="nav-search">
-                    <form action="/search" method="GET" id="searchForm">
-                        <input type="text" name="q" id="searchInput" placeholder="Search...">
-                        <button type="button" onclick="toggleSearch()" id="searchBtn">⌕</button>
-                    </form>
-                </div>
-
                 <div class="nav-auth">
                     {% if session.get('user_id') %}
                     <div style="display: flex; align-items: center; gap: 10px;">
@@ -56,7 +55,7 @@
     </nav>
 
     <div class="breadcrumb-section">
-        <div class="navbar-container">
+        <div class="navbar-container" style="flex-direction: column; align-items: flex-start; gap: 15px;">
             <ul class="breadcrumbs">
                 <li><a href="{{ url_for('index') }}">Home</a></li>
 
@@ -79,31 +78,39 @@
                 <li class="current">My profile</li>
                 {% elif request.endpoint == 'art_detail' %}
                 <li><a href="{{ url_for('art') }}">Art</a></li>
-                <li class="current">Details</li>
+                <li class="current">Detail</li>
+                {% elif request.endpoint == 'manage_art' %}
+                <li class="current">Manage Art</li>
+                {% elif request.endpoint == 'add_art' %}
+                <li><a href="{{ url_for('manage_art') }}">Manage Art</a></li>
+                <li class="current">Add</li>
+                {% elif request.endpoint == 'edit_art' %}
+                <li><a href="{{ url_for('manage_art') }}">Manage Art</a></li>
+                <li class="current">Edit</li>
+                {% elif request.endpoint == 'manage_artists' %}
+                <li class="current">Manage Artists</li>
+                {% elif request.endpoint == 'edit_artist' %}
+                <li><a href="{{ url_for('manage_artists') }}">Manage</a></li>
+                <li class="current">Edit</li>
                 {% endif %}
             </ul>
         </div>
     </div>
 
-    <script>
-        function toggleSearch() {
-            const form = document.getElementById('searchForm');
-            const input = document.getElementById('searchInput');
-            form.classList.toggle('active');
-            if (form.classList.contains('active')) {
-                input.focus();
-            } else if (input.value.trim() !== "") {
-                form.submit();
-            }
-        }
+    <main>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash-message flash-{{ category }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
 
-        function toggleMenu() {
-            const nav = document.getElementById('navMenu');
-            nav.classList.toggle('active');
-        }
-    </script>
+        {% block content %}{% endblock %}
+    </main>
 
-    {% block body %} {% endblock %}
 </body>
 
 </html>

@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="home-container">
+    <div class="section-header">
+        <h2>Tambah Karya & Artist</h2>
+    </div>
+
+    <div class="feedback-card" style="max-width: 800px; text-align: left; margin-top: 30px;">
+        <form method="POST" enctype="multipart/form-data">
+            <!-- SEKSI ARTIST -->
+            <h3 style="font-size: 1.1rem; text-transform: uppercase; letter-spacing: 2px; border-bottom: 1px solid #291C0E; padding-bottom: 10px; margin-bottom: 20px;">Data Artist</h3>
+            
+            <div class="input-group">
+                <label>Nama Artist</label>
+                <input type="text" name="artist_name" placeholder="Masukkan nama artist" required>
+            </div>
+            
+            <div class="input-group">
+                <label>ID Artist (Opsional)</label>
+                <input type="text" name="artist_id" placeholder="Biarkan kosong untuk otomatis">
+            </div>
+
+            <div class="input-group">
+                <label>Biografi Artist</label>
+                <textarea name="biography" rows="4" placeholder="Tulis biografi singkat artist..."></textarea>
+            </div>
+
+            <div class="input-group">
+                <label>Foto Artist</label>
+                <input type="file" name="photo_artist" accept="image/*">
+            </div>
+
+            <!-- SEKSI ART -->
+            <h3 style="font-size: 1.1rem; text-transform: uppercase; letter-spacing: 2px; border-bottom: 1px solid #291C0E; padding-bottom: 10px; margin-top: 40px; margin-bottom: 20px;">Data Karya Seni</h3>
+
+            <div class="input-group">
+                <label>Judul Karya Seni</label>
+                <input type="text" name="art_name" placeholder="Masukkan judul karya" required>
+            </div>
+
+            <div class="input-group">
+                <label>Deskripsi Karya</label>
+                <textarea name="description" rows="4" placeholder="Tulis deskripsi karya..."></textarea>
+            </div>
+
+            <div class="input-group">
+                <label>File Foto Karya (PNG/JPG/WEBP)</label>
+                <input type="file" name="photo_art" accept="image/*">
+            </div>
+
+            <div class="input-group">
+                <label>File Audio Guide (MP3)</label>
+                <input type="file" name="audio_file" accept=".mp3">
+            </div>
+
+            <div style="margin-top: 30px;">
+                <button type="submit" class="btn-submit-art">Simpan Ke Koleksi</button>
+                <a href="{{ url_for('manage_art') }}" style="display: block; text-align: center; margin-top: 15px; color: #888; text-decoration: none; font-size: 0.9rem;">Batal & Kembali</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

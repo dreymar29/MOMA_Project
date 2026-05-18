@@ -1,33 +1,39 @@
 {% extends 'base.html' %}
-{% block body %}
-
+{% block content %}
 <div class="home-container">
-<div class="artist-header">
-    <img src="{{ url_for('static', filename='image/' + artist.id|string + '.jpg') }}" alt="{{ artist.name }}" class="img-circle-profile">
-    <h1>{{ artist.name }}</h1>
-    <p class="bio">{{ artist.biography }}</p>
-</div>
+    <div style="display: flex; gap: 50px; flex-wrap: wrap; align-items: flex-start; margin-bottom: 60px;">
+        <div style="flex: 0 0 300px;">
+            <img src="{{ url_for('static', filename='image/' + artist.photo_path) if artist.photo_path else 'https://via.placeholder.com/300' }}" 
+                 alt="{{ artist.name }}" 
+                 class="img-circle-profile">
+        </div>
+        <div style="flex: 1; min-width: 300px;">
+            <h1 style="font-size: 3rem; margin-bottom: 10px; text-transform: uppercase; letter-spacing: -1px;">{{ artist.name }}</h1>
+            <div style="background: #291C0E; height: 3px; width: 60px; margin-bottom: 30px;"></div>
+            
+            <h3 style="text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem; margin-bottom: 15px; color: #888;">Biography</h3>
+            <p style="line-height: 1.8; color: #444; font-size: 1.05rem;">{{ artist.biography }}</p>
+        </div>
+    </div>
 
-<hr>
+    <div class="section-header">
+        <h2>Works in Collection</h2>
+    </div>
 
-<h3>{{ artist.name }}'s Works</h3>
-
-<div class="booklet-container">
-    
-    <div class="booklet-wrapper" id="bookletWrapper">
+    <div class="gallery-grid">
         {% for art in artist.arts %}
         <div class="booklet-item">
             <div class="art-card">
-                <img src="{{ url_for('static', filename='image/' + art.id|string + '.jpg') }}" alt="{{ art.name }}">
-                <div class="art-info-overlay">
-                    <p>{{ art.name }}</p>
-                    <a href="{{ url_for('art_detail', art_id=art.id) }}" class="view-btn">Lihat Detail</a>
+                <div class="scan-wrapper js-scan-trigger" data-url="{{ url_for('art_detail', art_id=art.id) }}">
+                    <div class="scan-line"></div>
+                    <img src="{{ url_for('static', filename='image/' + art.image_path) }}" alt="{{ art.name }}">
+                </div>
+                <div class="art-info">
+                    <h3>{{ art.name }}</h3>
                 </div>
             </div>
         </div>
         {% endfor %}
     </div>
-
-</div>
 </div>
 {% endblock %}

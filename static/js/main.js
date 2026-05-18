@@ -101,3 +101,29 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 3000);
     };
 });
+
+function toggleSearch() {
+            const form = document.getElementById('searchForm');
+            const input = document.getElementById('searchInput');
+            form.classList.toggle('active');
+            if (form.classList.contains('active')) {
+                input.focus();
+            } else if (input.value.trim() !== "") {
+                form.submit();
+            }
+        }
+
+        function toggleMenu() {
+            const nav = document.getElementById('navMenu');
+            const toggle = document.querySelector('.mobile-toggle');
+            nav.classList.toggle('active');
+            // Efek tambahan untuk icon hamburger (opsional)
+            toggle.classList.toggle('open');
+        }
+
+        // Menutup menu jika user klik link di dalamnya (berguna untuk mobile)
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('navMenu').classList.remove('active');
+            });
+        });

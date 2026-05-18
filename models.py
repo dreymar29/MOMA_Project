@@ -7,6 +7,7 @@ class Artist(db.Model):
     id = db.Column(db.String(20), primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     biography = db.Column(db.Text)
+    photo_path = db.Column(db.String(255), nullable=True)
     arts = db.relationship('Art', backref='author', lazy=True)
 
 class Art(db.Model):
@@ -14,7 +15,8 @@ class Art(db.Model):
     name = db.Column(db.String(100), nullable=False)
     description = db.Column(db.Text)
     artist_id = db.Column(db.String(20), db.ForeignKey('artist.id'))
-    audio_path = db.Column(db.String(255), nullable=True) 
+    audio_path = db.Column(db.String(255), nullable=True)
+    image_path = db.Column(db.String(255), nullable=True)
     
 class Visitor(db.Model):
     id = db.Column(db.Integer, primary_key=True)

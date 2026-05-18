@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="home-container">
+    <div class="section-header">
+        <h2>Edit Karya Seni</h2>
+    </div>
+
+    <div class="feedback-card" style="max-width: 600px; text-align: left; margin-top: 30px;">
+        <form method="POST" enctype="multipart/form-data">
+            <div class="input-group">
+                <label>Judul Karya Seni</label>
+                <input type="text" name="art_name" value="{{ art.name }}" required>
+            </div>
+
+            <div class="input-group">
+                <label>Deskripsi Karya</label>
+                <textarea name="description" rows="6">{{ art.description }}</textarea>
+            </div>
+
+            <div class="input-group">
+                <label>Pratinjau Foto Saat Ini</label>
+                <div style="margin-top: 10px; border: 1px solid #eee; padding: 10px; border-radius: 8px; text-align: center;">
+                    {% if art.image_path %}
+                    <img src="{{ url_for('static', filename='image/' + art.image_path) }}" style="max-width: 100%; height: auto; border-radius: 4px;">
+                    {% else %}
+                    <p style="color: #999; font-style: italic;">Tidak ada foto</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label>Ganti Foto Karya (Opsional)</label>
+                <input type="file" name="photo_art" accept="image/*">
+            </div>
+
+            <div style="margin-top: 30px;">
+                <button type="submit" class="btn-submit-art">Perbarui Data</button>
+                <a href="{{ url_for('manage_art') }}" style="display: block; text-align: center; margin-top: 15px; color: #888; text-decoration: none; font-size: 0.9rem;">Batal & Kembali</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

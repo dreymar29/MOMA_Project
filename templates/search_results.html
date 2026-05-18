@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="home-search-container" style="padding-top: 30px; padding-bottom: 0;">
+    <div class="nav-search">
+        <form action="/search" method="GET" id="searchFormHome">
+            <input type="text" name="q" value="{{ query }}" placeholder="Search the collection..." style="width: 100%;">
+            <button type="submit">⌕</button>
+        </form>
+    </div>
+</div>
+
+<div class="home-container">
+    <h2>Hasil Pencarian untuk: "{{ query }}"</h2>
+    <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0 40px 0;">
+
+    {% if arts or artists %}
+        {% if arts %}
+            <h3 style="margin-bottom: 25px; font-size: 1.4rem; color: #291C0E;">Karya Seni</h3>
+            <div class="gallery-grid">
+                {% for art in arts %}
+                    <div class="booklet-item">
+                        <div class="art-card">
+                            <div class="scan-wrapper js-scan-trigger" data-url="{{ url_for('art_detail', art_id=art.id) }}">
+                                <div class="scan-line"></div>
+                                <img src="{{ url_for('static', filename='image/' + art.image_path) }}" alt="{{ art.name }}">
+                            </div>
+                            <div class="art-info">
+                                <h3>{{ art.name }}</h3>
+                                <p>{{ art.author.name }}</p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% if artists %}
+            <h3 style="margin-top: 50px; margin-bottom: 25px; font-size: 1.4rem; color: #291C0E;">Artist</h3>
+            <div class="artist-grid">
+                {% for artist in artists %}
+                <a href="{{ url_for('artist_detail', artist_id=artist.id) }}" style="text-decoration: none; color: inherit;">
+                    <div class="artist-card-main">
+                        <div class="artist-image-wrapper">
+                            <img src="{{ url_for('static', filename='image/' + artist.photo_path) if artist.photo_path else 'https://via.placeholder.com/300' }}" 
+                                 alt="{{ artist.name }}" 
+                                 style="width: 100%; height: 250px; object-fit: cover; border-radius: 8px;">
+                        </div>
+                        <div class="artist-info">
+                            <h3>{{ artist.name }}</h3>
+                        </div>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% else %}
+        <p>Aduh, sepertinya yang kamu cari belum ada di koleksi MoMA kami. 😿</p>
+    {% endif %}
+</div>
+{% endblock %}

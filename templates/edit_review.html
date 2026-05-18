@@ -1,41 +1,32 @@
 {% extends 'base.html' %}
+{% block content %}
+<div class="home-container">
+    <div class="section-header">
+        <h2>Edit Review</h2>
+    </div>
 
-{% block body %}
-<div class="home-container" style="display: flex; justify-content: center; padding: 40px 20px;">
-    <div class="feedback-card" style="max-width: 500px; width: 100%;">
-        <h2 style="margin-top: 0; text-align: center;">Edit Ulasan</h2>
-        <p style="text-align: center; color: #666; font-size: 0.9rem;">
-            Mengubah ulasan untuk: <strong>{{ review.art_data.name }}</strong>
-        </p>
-        <hr>
-
-        <form action="{{ url_for('edit_review', log_id=review.id) }}" method="POST" class="review-form">
-            <div class="input-group">
-                <label style="display: block; text-align: center; margin-bottom: 10px;">Rating Karya:</label>
-                <div class="rating-wrapper">
-                    <div class="star-rating">
-                        {# Loop untuk mengecek bintang mana yang sebelumnya dipilih #}
-                        {% for i in range(5, 0, -1) %}
-                            <input type="radio" id="star{{ i }}" name="rating" value="{{ i }}" 
-                                   {% if review.rating == i %} checked {% endif %}>
-                            <label for="star{{ i }}">★</label>
-                        {% endfor %}
-                    </div>
+    <div class="feedback-card" style="max-width: 500px; margin-top: 30px; text-align: left;">
+        <p style="font-size: 0.9rem; color: #666; margin-bottom: 20px;">Editing review for: <strong>{{ review.art_data.name }}</strong></p>
+        
+        <form method="POST">
+            <div class="rating-wrapper" style="justify-content: flex-start;">
+                <div class="star-rating">
+                    <input type="radio" id="star5" name="rating" value="5" {% if review.rating == 5 %}checked{% endif %}/><label for="star5">★</label>
+                    <input type="radio" id="star4" name="rating" value="4" {% if review.rating == 4 %}checked{% endif %}/><label for="star4">★</label>
+                    <input type="radio" id="star3" name="rating" value="3" {% if review.rating == 3 %}checked{% endif %}/><label for="star3">★</label>
+                    <input type="radio" id="star2" name="rating" value="2" {% if review.rating == 2 %}checked{% endif %}/><label for="star2">★</label>
+                    <input type="radio" id="star1" name="rating" value="1" {% if review.rating == 1 %}checked{% endif %}/><label for="star1">★</label>
                 </div>
             </div>
 
-            <div class="input-group" style="margin-top: 20px;">
-                <label for="review_art">Ulasan Anda:</label>
-                <textarea name="review_art" id="review_art" required 
-                          style="width: 100%; height: 120px; padding: 10px; border: 1px solid #ddd;">{{ review.review_art }}</textarea>
+            <div class="input-group">
+                <label>Review Content</label>
+                <textarea name="review_art" rows="5" required>{{ review.review_art }}</textarea>
             </div>
 
-            <div style="display: flex; gap: 10px; margin-top: 20px;">
-                <button type="submit" class="btn-submit-art" style="flex: 2;">Simpan Perubahan</button>
-                <a href="{{ url_for('profile') }}" class="btn btn-secondary" 
-                   style="flex: 1; display: flex; align-items: center; justify-content: center; text-decoration: none; border: 1px solid #ccc; border-radius: 4px; color: #333;">
-                   Batal
-                </a>
+            <div style="margin-top: 20px;">
+                <button type="submit" class="btn-submit-art">Update Review</button>
+                <a href="{{ url_for('profile') }}" style="display: block; text-align: center; margin-top: 15px; color: #888; text-decoration: none; font-size: 0.9rem;">Cancel</a>
             </div>
         </form>
     </div>

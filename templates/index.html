@@ -1,6 +1,15 @@
 {% extends 'base.html' %}
 
-{% block body %}
+{% block content %}
+<div class="home-search-container">
+    <div class="nav-search">
+        <form action="/search" method="GET" id="searchFormHome">
+            <input type="text" name="q" placeholder="Search the collection..." style="width: 100%;">
+            <button type="submit" >⌕</button>
+        </form>
+    </div>
+</div>
+
 <div class="home-hero">
     <div class="hero-content">
         <h1>MoMA: <br>The Museum of Modern Art</h1>

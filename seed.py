@@ -3,16 +3,21 @@ from models import db, Artist, Art, Visitor, InteractionLog, Staff
 
 def isi_database():
     with app.app_context():
+        # Membuat ulang semua tabel berdasarkan model terbaru
+        db.create_all()
+        
         data_artist = [
             {
                 "id_artist": "919200001", 
                 "name": "Joan Snyder",
                 "biography": "Born April 16, 1940 in Highland Park, NJ, Joan Snyder received her AB from Douglass College in 1962 and her MFA from Rutgers University in 1966. Snyder has been the recipient of several awards and distinctions, including a National Endowment for the Arts Fellowship in 1974, a John Simon Guggenheim Memorial Fellowship in 1983, a MacArthur Fellowship in 2007 and elected to the American Academy of Arts and Letters in 2026.",
+                "photo": "919200001.jpg",
                 "art": [
                     {"id": "118200001", 
                      "name": "My August",
                      "description": "2023, Oil and acrylic paint, papier-mâché, straw, flower stems, rosebuds, ink, and paper on linen ; 52 x 72",
-                     "audio": "0238140001.mp3"}
+                     "audio": "0238140001.mp3",
+                     "image": "118200001.jpg"}
                 ]
             }
         ]
@@ -23,19 +28,21 @@ def isi_database():
                 artist = Artist(
                     id=item["id_artist"], 
                     name=item["name"], 
-                    biography=item.get("biography", "")
+                    biography=item.get("biography", ""),
+                    photo_path=item.get("photo")
                 )
                 db.session.add(artist)
                 db.session.commit() 
 
             for art in item["art"]:
-                if not Art.query.get(art["id"]):
+                if not db.session.get(Art, art["id"]):
                     new_art = Art(
                         id=art["id"], 
                         name=art["name"], 
                         artist_id=artist.id, 
                         description=art["description"],
-                        audio_path=art["audio"] 
+                        audio_path=art["audio"],
+                        image_path=art["image"]
                     )
                     db.session.add(new_art)
         

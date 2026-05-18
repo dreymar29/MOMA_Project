@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="home-container">
+    <div class="section-header">
+        <h2>Edit Data Artist</h2>
+    </div>
+
+    <div class="feedback-card" style="max-width: 600px; text-align: left; margin-top: 30px;">
+        <form method="POST" enctype="multipart/form-data">
+            <div class="input-group">
+                <label>Artist Name</label>
+                <input type="text" name="name" value="{{ artist.name }}" required>
+            </div>
+
+            <div class="input-group">
+                <label>Biografi Artist</label>
+                <textarea name="biography" rows="8">{{ artist.biography }}</textarea>
+            </div>
+
+            <div class="input-group">
+                <label>Pratinjau Foto Saat Ini</label>
+                <div style="margin-top: 10px; border: 1px solid #eee; padding: 10px; border-radius: 8px; text-align: center;">
+                    <img src="{{ url_for('static', filename='image/' + artist.photo_path) if artist.photo_path else 'https://via.placeholder.com/150' }}" style="max-width: 100%; height: auto; border-radius: 4px;">
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label>Change Photo</label>
+                <input type="file" name="photo" accept="image/*">
+            </div>
+
+            <div style="margin-top: 30px;">
+                <button type="submit" class="btn-submit-art">Update Artist</button>
+                <a href="{{ url_for('manage_artists') }}" style="display: block; text-align: center; margin-top: 15px; color: #888; text-decoration: none; font-size: 0.9rem;">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

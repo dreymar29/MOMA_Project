@@ -1,76 +1,47 @@
 {% extends 'base.html' %}
-
-{% block body %}
-<div style="display: flex; flex-direction: column; align-items: center; min-height: 80vh; padding: 40px 20px;">
-
-    <div
-        style="width: 100%; max-width: 400px; background: #ffffff; padding: 25px; border: 2px solid #000; box-shadow: 8px 8px 0px #000; font-family: 'Helvetica', Arial, sans-serif; margin-bottom: 30px;">
-        <h3
-            style="text-align: center; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 5px; font-weight: bold; font-size: 1.1rem;">
-            My Account</h3>
-        <p style="text-align: center; font-size: 0.6rem; margin-bottom: 15px; color: #666; letter-spacing: 1px;">{{ role
-            | upper }} INFORMATION</p>
-        <hr style="border: 0; border-top: 1px solid #eee; margin-bottom: 20px;">
-
-        <div style="margin-bottom: 15px;">
-            <p
-                style="font-size: 0.65rem; font-weight: bold; text-transform: uppercase; color: #999; margin-bottom: 2px;">
-                Name</p>
-            <p style="font-size: 1rem; font-weight: bold; color: #000; margin: 0;">{{ user.name }}</p>
-        </div>
-
-        {% if role == 'visitor' %}
-        <div style="margin-bottom: 15px;">
-            <p
-                style="font-size: 0.65rem; font-weight: bold; text-transform: uppercase; color: #999; margin-bottom: 2px;">
-                Last Activity</p>
-            <p style="font-size: 0.9rem; color: #000; margin: 0;">
-                {{ last_active.strftime('%d %b %Y, %H:%M') if last_active != "Belum ada aktivitas" else last_active }}
-            </p>
-        </div>
-        {% endif %}
-
-        <div style="margin-top: 20px;">
-            <a href="{{ url_for('logout') }}"
-                style="text-decoration: none; color: red; font-size: 0.8rem; font-weight: bold; text-transform: uppercase;">Logout
-                →</a>
-        </div>
+{% block content %}
+<div class="home-container">
+    <div class="section-header">
+        <h2>My Profile</h2>
     </div>
 
-    {% if role == 'visitor' %}
-    <div style="width: 100%; max-width: 600px; font-family: 'Helvetica', Arial, sans-serif;">
-        <h4 style="text-transform: uppercase; letter-spacing: 1px; border-bottom: 2px solid #000; padding-bottom: 5px;">
-            Review History</h4>
-
-        {% if logs %}
-        {% for log in logs %}
-        <div class="review-history-item"
-            style="background: #fff; border: 1px solid #BEB5A9; padding: 20px; margin-bottom: 15px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); position: relative;">
-            <p style="margin: 0; font-size: 0.75rem; color: #888; font-family: 'Inter', sans-serif;">{{
-                log.timestamp.strftime('%d/%m/%Y') }}</p>
-            <p style="margin: 5px 0; font-weight: 700; color: #291C0E; font-family: 'Inter', sans-serif;">{{
-                log.art_data.name }}</p>
-            <p
-                style="margin: 10px 0; font-size: 0.9rem; color: #444; font-style: italic; font-family: 'Inter', sans-serif;">
-                "{{ log.review_art if log.review_art else 'No comment' }}"</p>
-            <p style="margin: 0; color: #f39c12;">{{ "★" * log.rating }}{{ "☆" * (5 - log.rating) }}</p>
-
-            <div style="margin-top: 15px; display: flex; gap: 10px; border-top: 1px solid #EEE; padding-top: 10px;">
-                <a href="{{ url_for('edit_review', log_id=log.id) }}" class="action-btn-edit">
-                    Edit 
-                </a>
-                <a href="{{ url_for('delete_review', log_id=log.id) }}" class="action-btn-delete"
-                    onclick="return confirm('Hapus ulasan ini?')">
-                    Delete
-                </a>
-            </div>
+    <div style="display: flex; gap: 40px; flex-wrap: wrap; margin-top: 30px;">
+        <div class="feedback-card" style="flex: 0 0 300px; text-align: left;">
+            <h3 style="text-transform: uppercase; font-size: 0.8rem; letter-spacing: 2px; border-bottom: 1px solid #eee; padding-bottom: 10px;">User Info</h3>
+            <p><strong>Name:</strong> {{ user.name }}</p>
+            <p><strong>Role:</strong> {{ role }}</p>
+            <p><strong>Last Activity:</strong> {{ last_active }}</p>
         </div>
-        {% endfor %}
-        {% else %}
-        <p style="text-align: center; color: #999; font-style: italic;">No review history found.</p>
-        {% endif %}
-    </div>
-    {% endif %}
 
+        <div style="flex: 1; min-width: 300px;">
+            <h3 style="text-transform: uppercase; font-size: 0.8rem; letter-spacing: 2px; margin-bottom: 20px;">My Reviews</h3>
+            {% if role == 'visitor' %}
+                <div class="review-grid" style="grid-template-columns: 1fr;">
+                    {% for log in logs %}
+                    {% if log.review_art %}
+                    <div class="review-card">
+                        <div class="review-header">
+                            <div class="art-tag">Art: {{ log.art_data.name }}</div>
+                            <div class="rating-stars">
+                                {% for i in range(log.rating) %}★{% endfor %}
+                                {% for i in range(5 - log.rating) %}☆{% endfor %}
+                            </div>
+                        </div>
+                        <p class="review-text">"{{ log.review_art }}"</p>
+                        <div style="display: flex; gap: 10px; margin-top: 15px;">
+                            <a href="{{ url_for('edit_review', log_id=log.id) }}" class="action-btn-edit">Edit</a>
+                            <a href="{{ url_for('delete_review', log_id=log.id) }}" class="action-btn-delete" onclick="return confirm('Delete this review?')">Delete</a>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% else %}
+                    <p style="color: #999;">You haven't posted any reviews yet.</p>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p style="color: #999;">Staff accounts do not have visitor logs.</p>
+            {% endif %}
+        </div>
+    </div>
 </div>
 {% endblock %}

@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block body %}
+{% block content %}
 <div class="home-container">
     <h1 style="text-align: center; margin-top: 20px;">EXPLORE THE ART</h1>
     
@@ -10,7 +10,7 @@
         <div class="art-card">
             <div class="scan-wrapper js-scan-trigger" data-url="{{ url_for('art_detail', art_id=art.id) }}">
             <div class="scan-line"></div>
-            <img src="{{ url_for('static', filename='image/' + art.id|string + '.jpg') }}" alt="{{ art.name }}">
+            <img src="{{ url_for('static', filename='image/' + art.image_path) }}" alt="{{ art.name }}">
             </div>
             
             <div class="art-info">

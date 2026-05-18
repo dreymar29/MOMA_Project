@@ -1,53 +1,31 @@
 {% extends 'base.html' %}
-
-{% block body %}
-
-<div class="review-container">
-        <header style="display: flex; justify-content: space-between; align-items: center;">
-            <h1>Arts With Love</h1>
-            <a href="{{ url_for('art') }}" style="text-decoration: none; color: #007bff;">← Back to Gallery</a>
-        </header>
-
-        {% if reviews %}
-            <div class="review-grid">
-                {% for log in reviews %}
-                <div class="review-card">
-                    <div>
-                        <div class="review-header">
-                            <span class="visitor-name">{% if log.visitor_data %}
-                                                            {{ log.visitor_data.name }}
-                                                        {% else %}
-                                                            Visitor #{{ log.visitor_id }}
-                                                        {% endif %}
-                            </span>
-                            
-                            {% if log.art_id %}
-                                <br><span class="art-tag">Review untuk: <strong>{{ log.art_data.name if log.art_data else 'Selected Artwork' }}</strong></span>
-                            {% endif %}
-                        </div>
-                        
-                        {% if log.rating %}
-                            <strong>Art Review:</strong><br>
-                                <div class="rating-stars">
-                                {{ "★" * log.rating }}{{ "☆" * (5 - log.rating) }}
-                                </div>
-                        {% endif %}
-
-                        {% if log.review_art %}
-                            <p class="review-text">"{{ log.review_art }}"</p>
-                        {% endif %}
-                    </div>
-                </div>
-
-                {% endfor %}
-            </div>
-            
-            {% else %}
-            <div class="empty-state">
-                <h3>Belum ada ulasan.</h3>
-            </div>
-
-        {% endif %}
+{% block content %}
+<div class="home-container">
+    <div class="section-header">
+        <h2>Visitor Reviews</h2>
     </div>
 
+    <div class="review-grid">
+        {% for review in reviews %}
+        <div class="review-card">
+            <div class="review-header">
+                <span class="visitor-name">{{ review.visitor_data.name }}</span>
+                <div class="art-tag">On: {{ review.art_data.name }}</div>
+                <div class="rating-stars">
+                    {% for i in range(review.rating) %}★{% endfor %}
+                    {% for i in range(5 - review.rating) %}☆{% endfor %}
+                </div>
+            </div>
+            <p class="review-text">"{{ review.review_art }}"</p>
+            <div class="museum-feedback">
+                <small>{{ review.timestamp.strftime('%B %d, %Y') }}</small>
+            </div>
+        </div>
+        {% else %}
+        <div style="grid-column: 1/-1; text-align: center; padding: 50px;">
+            <p style="color: #888;">No reviews yet. Be the first to share your experience!</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
 {% endblock %}
